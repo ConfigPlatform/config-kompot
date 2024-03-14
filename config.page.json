@@ -142,25 +142,15 @@
               ]
             },
             {
-              "name": "First Name",
+              "name": "Name",
               "content": [
                 {
-                  "type": "text",
-                  "value": "$firstName",
+                  "type": "link",
+                  "href": "/client/$id",
+                  "text": "$firstName $lastName",
                   "vars": {
-                    "firstName": "$firstName"
-                  }
-                }
-              ]
-            },
-            {
-              "name": "Last Name",
-              "sortBy": "lastName",
-              "content": [
-                {
-                  "type": "text",
-                  "value": "$lastName",
-                  "vars": {
+                    "id": "$id",
+                    "firstName": "$firstName",
                     "lastName": "$lastName"
                   }
                 }
@@ -243,32 +233,14 @@
         "content": [
           {
             "type": "text",
-            "value": "Client",
-            "className": "text-3xl text-gray-900 font-medium"
-          },
-
-          {
-            "type": "text",
             "value": "$firstName $lastName",
+            "className": "text-3xl text-gray-900 font-medium",
             "vars": {
               "firstName": "$firstName",
               "lastName": "$lastName"
-            },
-            "className": "text-2xl text-gray-700 font-medium"
-          },
-
-          {
-            "type": "text",
-            "value": "$phone",
-            "vars": {
-              "phone": "$phone"
-            },
-            "className": "text-xl text-gray-700 font-medium"
+            }
           }
-
-
         ]
-
       }]
     },
 
@@ -351,7 +323,7 @@
       "content": [
         {
           "type": "text",
-          "value": "1 The perfect CRM platform to grow your business.",
+          "value": "The perfect CRM platform to grow your business.",
           "className": "text-4xl text-gray-900 font-medium pt-10"
         },
         {

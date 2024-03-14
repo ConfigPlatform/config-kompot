@@ -255,8 +255,6 @@
         }
       ]
     },
-
-
     {
       "name": "client_get_by_id",
       "actions": [
@@ -266,8 +264,6 @@
           "value": "null",
           "as": "let"
         },
-
-
         {
           "type": "select",
           "entityName": "client",
@@ -277,11 +273,10 @@
           "awaitResult": true,
           "assignToVar": "client"
         },
-
         {
           "type": "return",
           "data": "$client",
-          "config": null
+          "config": []
         }
       ]
     },
