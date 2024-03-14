@@ -1,6 +1,6 @@
 {
   "navbar": {
-    "className": "border-gray-200 bg-gray-100",
+    "className": "",
     "content": [
       {
         "type": "row",

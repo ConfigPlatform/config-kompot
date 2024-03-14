@@ -255,6 +255,37 @@
         }
       ]
     },
+
+
+    {
+      "name": "client_get_by_id",
+      "actions": [
+        {
+          "type": "variable",
+          "name": "client",
+          "value": "null",
+          "as": "let"
+        },
+
+
+        {
+          "type": "select",
+          "entityName": "client",
+          "where": {
+            "id": "$data.params.id"
+          },
+          "awaitResult": true,
+          "assignToVar": "client"
+        },
+
+        {
+          "type": "return",
+          "data": "$client",
+          "config": null
+        }
+      ]
+    },
+
     {
       "name": "client_get_all",
       "actions": [

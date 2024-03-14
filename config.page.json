@@ -234,6 +234,44 @@
         }
       ]
     },
+
+    {
+      "path": "/client/:id",
+      "content": [{
+        "type": "dataContext",
+        "select": "client_get_by_id",
+        "content": [
+          {
+            "type": "text",
+            "value": "Client",
+            "className": "text-3xl text-gray-900 font-medium"
+          },
+
+          {
+            "type": "text",
+            "value": "$firstName $lastName",
+            "vars": {
+              "firstName": "$firstName",
+              "lastName": "$lastName"
+            },
+            "className": "text-2xl text-gray-700 font-medium"
+          },
+
+          {
+            "type": "text",
+            "value": "$phone",
+            "vars": {
+              "phone": "$phone"
+            },
+            "className": "text-xl text-gray-700 font-medium"
+          }
+
+
+        ]
+
+      }]
+    },
+
     {
       "path": "/product",
       "content": [
