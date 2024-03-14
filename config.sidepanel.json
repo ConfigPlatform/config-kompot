@@ -22,8 +22,11 @@
                   "label": "Price",
                   "type": "number",
                   "required": true,
-                  "defaultValue": 100,
-                  "className": "w-full"
+                  "defaultValue": "$defaultValue",
+                  "className": "w-full",
+                  "vars": {
+                    "defaultValue": "$defaultValue"
+                  }
                 },
                 {
                   "name": "name",
