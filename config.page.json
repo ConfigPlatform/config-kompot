@@ -346,12 +346,7 @@
         {
           "type": "tooltip",
           "value": "CRM Client Quantity",
-          "content": [
-            {
-              "type": "text",
-              "value": "The number of clients in the CRM system."
-            }
-          ],
+          "content": [],
           "placement": [
             "top",
             "bottom",
