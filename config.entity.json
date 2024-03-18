@@ -1,32 +1,6 @@
 {
   "entities": [
     {
-      "entityName": "product",
-      "fields": [
-        {
-          "name": "name",
-          "type": "string",
-          "options": {
-            "type": "varchar"
-          }
-        },
-        {
-          "name": "price",
-          "type": "number",
-          "options": {
-            "type": "int"
-          }
-        },
-        {
-          "name": "description",
-          "type": "string",
-          "options": {
-            "type": "varchar"
-          }
-        }
-      ]
-    },
-    {
       "entityName": "client",
       "fields": [
         {
@@ -44,19 +18,17 @@
           }
         },
         {
-          "name": "phone",
+          "name": "email",
           "type": "string",
           "options": {
             "type": "varchar"
           }
         },
         {
-          "name": "invoices",
-          "type": "relation",
+          "name": "phone",
+          "type": "string",
           "options": {
-            "relationType": "one-to-many",
-            "ref": "invoice",
-            "foreignField": "client"
+            "type": "varchar"
           }
         }
       ]
@@ -65,12 +37,33 @@
       "entityName": "invoice",
       "fields": [
         {
-          "name": "products",
+          "name": "amount",
+          "type": "number",
+          "options": {"type": "int"}
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "options": {"type": "varchar"}
+        },
+        {
+          "name": "client",
           "type": "relation",
           "options": {
-            "relationType": "many-to-many",
-            "ownerSide": true,
-            "ref": "product"
+            "ref": "client",
+            "relationType": "many-to-one"
+          }
+        }
+      ]
+    },
+    {
+      "entityName": "payment",
+      "fields": [
+        {
+          "name": "amount",
+          "type": "number",
+          "options": {
+            "type": "int"
           }
         },
         {
@@ -78,8 +71,15 @@
           "type": "relation",
           "options": {
             "relationType": "many-to-one",
-            "ref": "client",
-            "foreignField": "invoices"
+            "ref": "client"
+          }
+        },
+        {
+          "name": "invoice",
+          "type": "relation",
+          "options": {
+            "relationType": "many-to-one",
+            "ref": "invoice"
           }
         }
       ]

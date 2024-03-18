@@ -28,6 +28,11 @@
                 "type": "link",
                 "href": "/invoice",
                 "text": "Invoices"
+              },
+              {
+                "type": "link",
+                "href": "/payment",
+                "text": "Payments"
               }
             ]
           }

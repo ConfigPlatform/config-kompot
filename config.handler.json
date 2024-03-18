@@ -124,7 +124,7 @@
               "status": "success",
               "duration": 2000,
               "placement": "top-right",
-              "content": "Invoice has been created"
+              "content": "Invoice was created"
             },
             {
               "clientHandler": "redirectPage",
@@ -186,7 +186,7 @@
       ]
     },
     {
-      "name": "invoice_get_all",
+      "name": "invoice_search",
       "actions": [
         {
           "type": "variable",
@@ -201,10 +201,6 @@
             [
               "client",
               "client"
-            ],
-            [
-              "products",
-              "product"
             ]
           ],
           "itemsPerPage": 10,
@@ -282,7 +278,7 @@
     },
 
     {
-      "name": "client_get_all",
+      "name": "client_search",
       "actions": [
         {
           "type": "variable",
@@ -297,10 +293,6 @@
             {
               "type": "select",
               "entityName": "client",
-              "leftJoinAndSelect": [
-                "invoices",
-                "invoice"
-              ],
               "orderBy": "$data.sorting",
               "where": "$data.filters",
               "itemsPerPage": 10,
@@ -328,10 +320,6 @@
             {
               "type": "select",
               "entityName": "client",
-              "leftJoinAndSelect": [
-                "invoices",
-                "invoice"
-              ],
               "itemsPerPage": 10,
               "awaitResult": true,
               "assignToVar": "clientsGetRes"
@@ -357,10 +345,6 @@
             {
               "type": "select",
               "entityName": "client",
-              "leftJoinAndSelect": [
-                "invoices",
-                "invoice"
-              ],
               "where": "$data.filters",
               "itemsPerPage": 10,
               "awaitResult": true,
@@ -387,10 +371,6 @@
             {
               "type": "select",
               "entityName": "client",
-              "leftJoinAndSelect": [
-                "invoices",
-                "invoice"
-              ],
               "orderBy": "$data.sorting",
               "itemsPerPage": 10,
               "awaitResult": true,
@@ -545,20 +525,35 @@
       "name": "invoice_create_sidepanel_submit",
       "actions": [
         {
+          "type": "variable",
+          "name": "client",
+          "value": "null",
+          "as": "let"
+        },
+        {
+          "type": "select",
+          "entityName": "client",
+          "where": {
+            "id": "$data.client"
+          },
+          "awaitResult": true,
+          "assignToVar": "client"
+        },
+        {
           "type": "insert",
           "entityName": "invoice",
           "fields": [
             {
-              "entityField": "name",
-              "value": "$data.name"
+              "entityField": "amount",
+              "value": "$data.amount"
             },
             {
-              "entityField": "price",
-              "value": "$data.price"
+              "entityField": "status",
+              "value": "draft"
             },
             {
-              "entityField": "description",
-              "value": "$data.description"
+              "entityField": "client",
+              "value": "$client.id"
             }
           ],
           "awaitResult": true
@@ -572,7 +567,7 @@
             },
             {
               "clientHandler": "refreshData",
-              "select": "invoice_get_all"
+              "select": "invoice_search"
             },
             {
               "clientHandler": "setMessage",
@@ -580,7 +575,7 @@
               "status": "success",
               "duration": 2000,
               "placement": "top-right",
-              "content": "Invoice has been created"
+              "content": "Invoice was created"
             }
           ]
         }
@@ -681,7 +676,7 @@
           "config": [
             {
               "clientHandler": "refreshData",
-              "select": "client_get_all"
+              "select": "client_search"
             },
             {
               "clientHandler": "setMessage",
@@ -746,11 +741,15 @@
           "fields": [
             {
               "entityField": "firstName",
-              "value": "$data.firstName.toUpperCase()"
+              "value": "$data.firstName"
             },
             {
               "entityField": "lastName",
-              "value": "$data.lastName.toUpperCase()"
+              "value": "$data.lastName"
+            },
+            {
+              "entityField": "email",
+              "value": "$data.email"
             },
             {
               "entityField": "phone",
@@ -768,7 +767,7 @@
             },
             {
               "clientHandler": "refreshData",
-              "select": "client_get_all"
+              "select": "client_search"
             },
             {
               "clientHandler": "setMessage",
@@ -779,6 +778,217 @@
               "content": "Client was created"
             }
           ]
+        }
+      ]
+    },
+    {
+      "name": "invoice_create_default_values",
+      "actions": [
+        {
+          "type": "variable",
+          "name": "clients",
+          "value": "null",
+          "as": "let"
+        },
+        {
+          "type": "select",
+          "entityName": "client",
+          "multiple": true,
+          "awaitResult": true,
+          "assignToVar": "clients"
+        },
+        {
+          "type": "mutate",
+          "field": "$clients",
+          "value": "$clients.map(el => ({ label: el.firstName + ' ' + el.lastName, value: el.id }))"
+        },
+        {
+          "type": "return",
+          "data": "{ $clients }",
+          "config": null
+        }
+      ]
+    },
+    {
+      "name": "payment_search",
+      "actions": [
+        {
+          "type": "variable",
+          "name": "paymentsGetRes",
+          "value": "null",
+          "as": "let"
+        },
+        {
+          "type": "select",
+          "entityName": "payment",
+          "leftJoinAndSelect": [
+            [
+              "client",
+              "client"
+            ],
+            [
+              "invoice",
+              "invoice"
+            ]
+          ],
+          "itemsPerPage": 10,
+          "multiple": true,
+          "awaitResult": true,
+          "assignToVar": "paymentsGetRes"
+        },
+        {
+          "type": "return",
+          "data": {
+            "items": "$paymentsGetRes[0]",
+            "totalCount": "$paymentsGetRes[1]",
+            "pagination": {
+              "itemsPerPage": 10
+            }
+          },
+          "config": null
+        }
+      ]
+    },
+    {
+      "name": "payment_create_sidepanel_submit",
+      "actions": [
+        {
+          "type": "variable",
+          "name": "invoice",
+          "value": "null",
+          "as": "let"
+        },
+        {
+          "type": "variable",
+          "name": "client",
+          "value": "null",
+          "as": "let"
+        },
+        {
+          "type": "select",
+          "entityName": "invoice",
+          "leftJoinAndSelect": [
+            [
+              "client",
+              "client"
+            ]
+          ],
+          "where": {
+            "id": "$data.invoice"
+          },
+          "awaitResult": true,
+          "assignToVar": "invoice"
+        },
+        {
+          "type": "select",
+          "entityName": "client",
+          "where": {
+            "id": "$invoice.client.id"
+          },
+          "awaitResult": true,
+          "assignToVar": "client"
+        },
+        {
+          "type": "insert",
+          "entityName": "payment",
+          "fields": [
+            {
+              "entityField": "amount",
+              "value": "$data.amount"
+            },
+            {
+              "entityField": "invoice",
+              "value": "$invoice.id"
+            },
+            {
+              "entityField": "client",
+              "value": "$client.id"
+            }
+          ],
+          "awaitResult": true
+        },
+        {
+          "type": "return",
+          "config": [
+            {
+              "clientHandler": "closeSidepanel",
+              "id": "create_payment"
+            },
+            {
+              "clientHandler": "refreshData",
+              "select": "payment_search"
+            },
+            {
+              "clientHandler": "setMessage",
+              "id": "payment_created",
+              "status": "success",
+              "duration": 2000,
+              "placement": "top-right",
+              "content": "Payment was created"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "payment_create_sidepanel_close",
+      "actions": [
+        {
+          "type": "return",
+          "config": [
+            {
+              "clientHandler": "closeSidepanel",
+              "id": "create_payment"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "payment_create_sidepanel_open",
+      "actions": [
+        {
+          "type": "return",
+          "config": [
+            {
+              "clientHandler": "openSidepanel",
+              "id": "create_payment"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "payment_create_default_values",
+      "actions": [
+        {
+          "type": "variable",
+          "name": "invoices",
+          "value": "null",
+          "as": "let"
+        },
+        {
+          "type": "select",
+          "entityName": "invoice",
+          "leftJoinAndSelect": [
+            [
+              "client",
+              "client"
+            ]
+          ],
+          "multiple": true,
+          "awaitResult": true,
+          "assignToVar": "invoices"
+        },
+        {
+          "type": "mutate",
+          "field": "$invoices",
+          "value": "$invoices.map(el => ({ label: '#' + el.id + ' ' + el.client.firstName + ' ' + el.client.lastName, value: el.id }))"
+        },
+        {
+          "type": "return",
+          "data": "{ $invoices }",
+          "config": null
         }
       ]
     }

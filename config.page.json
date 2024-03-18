@@ -6,7 +6,7 @@
         {
           "type": "text",
           "value": "Invoices",
-          "className": "text-3xl text-gray-900 font-medium"
+          "className": "text-3xl text-gray-900 font-medium mb-4"
         },
         {
           "type": "button",
@@ -15,7 +15,7 @@
         },
         {
           "type": "table",
-          "select": "invoice_get_all",
+          "select": "invoice_search",
           "columns": [
             {
               "name": "ID",
@@ -25,6 +25,30 @@
                   "value": "$id",
                   "vars": {
                     "id": "$id"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Amount",
+              "content": [
+                {
+                  "type": "text",
+                  "value": "$$amount",
+                  "vars": {
+                    "amount": "$amount"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Status",
+              "content": [
+                {
+                  "type": "text",
+                  "value": "$status",
+                  "vars": {
+                    "status": "$status"
                   }
                 }
               ]
@@ -34,157 +58,11 @@
               "content": [
                 {
                   "type": "text",
-                  "value": "$name",
+                  "value": "$firstName $lastName",
                   "vars": {
-                    "client.lastName": "$name"
+                    "client.firstName": "$firstName",
+                    "client.lastName": "$lastName"
                   }
-                }
-              ]
-            },
-            {
-              "name": "Products",
-              "content": [
-                {
-                  "type": "list",
-                  "data": "products",
-                  "separator": ", ",
-                  "content": [
-                    {
-                      "type": "text",
-                      "value": "$name",
-                      "vars": {
-                        "name": "$name"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "pagination",
-          "select": "invoice_get_all",
-          "className": "flex justify-center"
-        }
-      ]
-    },
-    {
-      "path": "/client",
-      "content": [
-        {
-          "type": "text",
-          "value": "Client list",
-          "className": "text-3xl text-gray-900 font-medium"
-        },
-        {
-          "type": "row",
-          "content": [
-            {
-              "type": "col",
-              "width": "6",
-              "content": [
-                {
-                  "type": "filter",
-                  "placeholder": "Enter phone",
-                  "filterBy": "phone",
-                  "select": "client_get_all"
-                },
-                {
-                  "type": "filter",
-                  "placeholder": "Enter first name",
-                  "filterBy": "firstName",
-                  "select": "client_get_all"
-                },
-                {
-                  "type": "filter",
-                  "placeholder": "Enter last name",
-                  "filterBy": "lastName",
-                  "select": "client_get_all"
-                },
-                {
-                  "type": "button",
-                  "variant": "secondary",
-                  "text": "Reset filters",
-                  "serverHandler": "open_client_create_sidepanel"
-                }
-              ]
-            },
-            {
-              "type": "col",
-              "width": "6",
-              "className": "flex justify-end",
-              "content": [
-                {
-                  "type": "button",
-                  "text": "Add Client",
-                  "serverHandler": "open_client_create_sidepanel"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "table",
-          "select": "client_get_all",
-          "columns": [
-            {
-              "name": "ID",
-              "sortBy": "id",
-              "content": [
-                {
-                  "type": "text",
-                  "value": "$id",
-                  "vars": {
-                    "id": "$id"
-                  }
-                }
-              ]
-            },
-            {
-              "name": "Name",
-              "content": [
-                {
-                  "type": "link",
-                  "href": "/client/$id",
-                  "text": "$firstName $lastName",
-                  "vars": {
-                    "id": "$id",
-                    "firstName": "$firstName",
-                    "lastName": "$lastName"
-                  }
-                }
-              ]
-            },
-            {
-              "name": "Phone",
-              "sortBy": "phone",
-              "content": [
-                {
-                  "type": "text",
-                  "value": "$phone",
-                  "vars": {
-                    "phone": "$phone"
-                  }
-                }
-              ]
-            },
-            {
-              "name": "Invoices",
-              "content": [
-                {
-                  "type": "list",
-                  "data": "invoices",
-                  "separator": ", ",
-                  "content": [
-                    {
-                      "type": "text",
-                      "value": "$id",
-                      "vars": {
-                        "id": "$id"
-                      }
-                    }
-                  ]
                 }
               ]
             },
@@ -219,7 +97,143 @@
         },
         {
           "type": "pagination",
-          "select": "client_get_all",
+          "select": "invoice_search",
+          "className": "flex justify-center"
+        }
+      ]
+    },
+    {
+      "path": "/client",
+      "content": [
+        {
+          "type": "text",
+          "value": "Clients",
+          "className": "text-3xl text-gray-900 font-medium mb-4"
+        },
+        {
+          "type": "row",
+          "content": [
+            {
+              "type": "col",
+              "width": "6",
+              "content": [
+                {
+                  "type": "filter",
+                  "placeholder": "Enter phone",
+                  "filterBy": "phone",
+                  "select": "client_search"
+                },
+                {
+                  "type": "filter",
+                  "placeholder": "Enter first name",
+                  "filterBy": "firstName",
+                  "select": "client_search"
+                },
+                {
+                  "type": "filter",
+                  "placeholder": "Enter last name",
+                  "filterBy": "lastName",
+                  "select": "client_search"
+                },
+                {
+                  "type": "button",
+                  "variant": "secondary",
+                  "text": "Reset filters",
+                  "serverHandler": "open_client_create_sidepanel"
+                }
+              ]
+            },
+            {
+              "type": "col",
+              "width": "6",
+              "className": "flex justify-end",
+              "content": [
+                {
+                  "type": "button",
+                  "text": "Add Client",
+                  "serverHandler": "open_client_create_sidepanel"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "table",
+          "select": "client_search",
+          "columns": [
+            {
+              "name": "ID",
+              "sortBy": "id",
+              "content": [
+                {
+                  "type": "text",
+                  "value": "$id",
+                  "vars": {
+                    "id": "$id"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Name",
+              "content": [
+                {
+                  "type": "link",
+                  "className": "mx-0",
+                  "href": "/client/$id",
+                  "text": "$firstName $lastName",
+                  "vars": {
+                    "id": "$id",
+                    "firstName": "$firstName",
+                    "lastName": "$lastName"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Phone",
+              "content": [
+                {
+                  "type": "text",
+                  "value": "$phone",
+                  "vars": {
+                    "phone": "$phone"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Controls",
+              "content": [
+                {
+                  "type": "dropdown",
+                  "iconRight": "<svg class=\"w-5 h-full\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\" viewBox=\"0 0 16 3\">\n    <path d=\"M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z\"/>\n  </svg>",
+                  "action": "click",
+                  "content": [
+                    {
+                      "type": "button",
+                      "text": "Edit",
+                      "className": "w-full mx-0"
+                    },
+                    {
+                      "type": "button",
+                      "data": {
+                        "id": "$id"
+                      },
+                      "serverHandler": "client_delete_one",
+                      "text": "Delete",
+                      "variant": "danger",
+                      "className": "w-full mx-0"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pagination",
+          "select": "client_search",
           "className": "flex justify-center"
         }
       ]
@@ -322,6 +336,108 @@
         {
           "type": "pagination",
           "select": "product_get_all",
+          "className": "flex justify-center"
+        }
+      ]
+    },
+    {
+      "path": "/payment",
+      "content": [
+        {
+          "type": "text",
+          "value": "Payments",
+          "className": "text-3xl text-gray-900 font-medium mb-4"
+        },
+        {
+          "type": "button",
+          "text": "Add Payment",
+          "serverHandler": "payment_create_sidepanel_open"
+        },
+        {
+          "type": "table",
+          "select": "payment_search",
+          "columns": [
+            {
+              "name": "ID",
+              "content": [
+                {
+                  "type": "text",
+                  "value": "$id",
+                  "vars": {
+                    "id": "$id"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Amount",
+              "content": [
+                {
+                  "type": "text",
+                  "value": "$$amount",
+                  "vars": {
+                    "amount": "$amount"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Invoice",
+              "content": [
+                {
+                  "type": "text",
+                  "value": "#$id",
+                  "vars": {
+                    "invoice.id": "$id"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Client",
+              "content": [
+                {
+                  "type": "text",
+                  "value": "$firstName $lastName",
+                  "vars": {
+                    "client.firstName": "$firstName",
+                    "client.lastName": "$lastName"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Controls",
+              "content": [
+                {
+                  "type": "dropdown",
+                  "iconRight": "<svg class=\"w-5 h-full\" aria-hidden=\"true\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\" viewBox=\"0 0 16 3\">\n    <path d=\"M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z\"/>\n  </svg>",
+                  "action": "click",
+                  "content": [
+                    {
+                      "type": "button",
+                      "text": "Edit",
+                      "className": "w-full mx-0"
+                    },
+                    {
+                      "type": "button",
+                      "data": {
+                        "id": "$id"
+                      },
+                      "serverHandler": "client_delete_one",
+                      "text": "Delete",
+                      "variant": "danger",
+                      "className": "w-full mx-0"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "pagination",
+          "select": "payment_search",
           "className": "flex justify-center"
         }
       ]
