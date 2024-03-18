@@ -342,6 +342,23 @@
         {
           "type": "button",
           "text": "Try for free"
+        },
+        {
+          "type": "tooltip",
+          "value": "CRM Client Quantity",
+          "content": [
+            {
+              "type": "text",
+              "value": "The number of clients in the CRM system."
+            }
+          ],
+          "placement": [
+            "top",
+            "bottom",
+            "left",
+            "right",
+            "default"
+          ]
         }
       ]
     }
