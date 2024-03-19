@@ -196,14 +196,8 @@
               "type": "form",
               "fields": [
                 {
-                  "name": "firstName",
-                  "label": "First Name",
-                  "type": "text",
-                  "required": true
-                },
-                {
-                  "name": "lastName",
-                  "label": "Last Name",
+                  "name": "name",
+                  "label": "Name",
                   "type": "text",
                   "required": true
                 },

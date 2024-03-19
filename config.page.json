@@ -58,10 +58,9 @@
               "content": [
                 {
                   "type": "text",
-                  "value": "$firstName $lastName",
+                  "value": "$name",
                   "vars": {
-                    "client.firstName": "$firstName",
-                    "client.lastName": "$lastName"
+                    "client.name": "$name"
                   }
                 }
               ]
@@ -119,20 +118,20 @@
               "content": [
                 {
                   "type": "filter",
+                  "placeholder": "Enter name",
+                  "filterBy": "name",
+                  "select": "client_search"
+                },
+                {
+                  "type": "filter",
+                  "placeholder": "Enter email",
+                  "filterBy": "email",
+                  "select": "client_search"
+                },
+                {
+                  "type": "filter",
                   "placeholder": "Enter phone",
                   "filterBy": "phone",
-                  "select": "client_search"
-                },
-                {
-                  "type": "filter",
-                  "placeholder": "Enter first name",
-                  "filterBy": "firstName",
-                  "select": "client_search"
-                },
-                {
-                  "type": "filter",
-                  "placeholder": "Enter last name",
-                  "filterBy": "lastName",
                   "select": "client_search"
                 },
                 {
@@ -181,11 +180,22 @@
                   "type": "link",
                   "className": "mx-0",
                   "href": "/client/$id",
-                  "text": "$firstName $lastName",
+                  "text": "$name",
                   "vars": {
                     "id": "$id",
-                    "firstName": "$firstName",
-                    "lastName": "$lastName"
+                    "name": "$name"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Email",
+              "content": [
+                {
+                  "type": "text",
+                  "value": "$email",
+                  "vars": {
+                    "email": "$email"
                   }
                 }
               ]
@@ -246,21 +256,181 @@
           "select": "client_get_by_id",
           "content": [
             {
-              "type": "text",
-              "value": "$firstName $lastName",
-              "className": "text-3xl text-gray-900 font-medium",
-              "vars": {
-                "firstName": "$firstName",
-                "lastName": "$lastName"
-              }
+              "type": "image",
+              "src": "https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png",
+              "alt": "avatar",
+              "className": "h-auto w-14 rounded-sm"
             },
             {
-              "type": "text",
-              "value": "$phone",
-              "className": "text-xl text-gray-700 font-medium",
-              "vars": {
-                "phone": "$phone"
-              }
+              "type": "col",
+              "width": 6,
+              "className": "my-2",
+              "content": [
+                {
+                  "type": "row",
+                  "content": [
+                    {
+                      "type": "col",
+                      "width": 1,
+                      "content": [
+                        {
+                          "type": "text",
+                          "value": "Name:",
+                          "className": "font-medium block"
+                        },
+                        {
+                          "type": "text",
+                          "value": "Email:",
+                          "className": "font-medium block"
+                        },
+                        {
+                          "type": "text",
+                          "value": "Phone:",
+                          "className": "font-medium block"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "col",
+                      "width": 5,
+                      "content": [
+                        {
+                          "type": "text",
+                          "value": "$name",
+                          "className": "block",
+                          "vars": {
+                            "name": "$name"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "value": "$email",
+                          "className": "block",
+                          "vars": {
+                            "email": "$email"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "value": "$phone",
+                          "className": "block",
+                          "vars": {
+                            "phone": "$phone"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "col",
+              "width": 6,
+              "className": "my-4",
+              "content": [
+                {
+                  "type": "text",
+                  "value": "Invoices",
+                  "className": "block font-medium text-xl"
+                },
+                {
+                  "type": "table",
+                  "select": "invoice_get_by_client",
+                  "columns": [
+                    {
+                      "name": "ID",
+                      "content": [
+                        {
+                          "type": "text",
+                          "value": "$id",
+                          "vars": {
+                            "id": "$id"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Amount",
+                      "content": [
+                        {
+                          "type": "text",
+                          "value": "$$amount",
+                          "vars": {
+                            "amount": "$amount"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Status",
+                      "content": [
+                        {
+                          "type": "text",
+                          "value": "$status",
+                          "vars": {
+                            "status": "$status"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "col",
+              "width": 6,
+              "className": "my-4",
+              "content": [
+                {
+                  "type": "text",
+                  "value": "Payments",
+                  "className": "block font-medium text-xl"
+                },
+                {
+                  "type": "table",
+                  "select": "payment_get_by_client",
+                  "columns": [
+                    {
+                      "name": "ID",
+                      "content": [
+                        {
+                          "type": "text",
+                          "value": "$id",
+                          "vars": {
+                            "id": "$id"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Amount",
+                      "content": [
+                        {
+                          "type": "text",
+                          "value": "$$amount",
+                          "vars": {
+                            "amount": "$amount"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Invoice",
+                      "content": [
+                        {
+                          "type": "text",
+                          "value": "#$id",
+                          "vars": {
+                            "id": "$id"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -398,10 +568,9 @@
               "content": [
                 {
                   "type": "text",
-                  "value": "$firstName $lastName",
+                  "value": "$name",
                   "vars": {
-                    "client.firstName": "$firstName",
-                    "client.lastName": "$lastName"
+                    "client.name": "$name"
                   }
                 }
               ]

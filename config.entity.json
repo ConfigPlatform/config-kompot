@@ -4,14 +4,7 @@
       "entityName": "client",
       "fields": [
         {
-          "name": "firstName",
-          "type": "string",
-          "options": {
-            "type": "varchar"
-          }
-        },
-        {
-          "name": "lastName",
+          "name": "name",
           "type": "string",
           "options": {
             "type": "varchar"

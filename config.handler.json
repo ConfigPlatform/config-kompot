@@ -257,8 +257,20 @@
         {
           "type": "variable",
           "name": "client",
-          "value": "null",
+          "value": "{}",
           "as": "let"
+        },
+        {
+          "type": "condition",
+          "condition": "!$data.params.id",
+          "onMatch": [
+            {
+              "type": "return",
+              "data": "$client",
+              "config": []
+            }
+          ],
+          "onNotMatch": []
         },
         {
           "type": "select",
@@ -276,7 +288,82 @@
         }
       ]
     },
-
+    {
+      "name": "invoice_get_by_client",
+      "actions": [
+        {
+          "type": "variable",
+          "name": "invoices",
+          "value": "[]",
+          "as": "let"
+        },
+        {
+          "type": "condition",
+          "condition": "!$data.params.id",
+          "onMatch": [
+            {
+              "type": "return",
+              "data": "$invoices",
+              "config": []
+            }
+          ],
+          "onNotMatch": []
+        },
+        {
+          "type": "select",
+          "entityName": "invoice",
+          "multiple": true,
+          "where": {
+            "client": "$data.params.id"
+          },
+          "awaitResult": true,
+          "assignToVar": "invoices"
+        },
+        {
+          "type": "return",
+          "data": "$invoices",
+          "config": null
+        }
+      ]
+    },
+    {
+      "name": "payment_get_by_client",
+      "actions": [
+        {
+          "type": "variable",
+          "name": "payments",
+          "value": "[]",
+          "as": "let"
+        },
+        {
+          "type": "condition",
+          "condition": "!$data.params.id",
+          "onMatch": [
+            {
+              "type": "return",
+              "data": "$payments",
+              "config": []
+            }
+          ],
+          "onNotMatch": []
+        },
+        {
+          "type": "select",
+          "entityName": "payment",
+          "multiple": true,
+          "where": {
+            "client": "$data.params.id"
+          },
+          "awaitResult": true,
+          "assignToVar": "payments"
+        },
+        {
+          "type": "return",
+          "data": "$payments",
+          "config": null
+        }
+      ]
+    },
     {
       "name": "client_search",
       "actions": [
@@ -740,12 +827,8 @@
           "entityName": "client",
           "fields": [
             {
-              "entityField": "firstName",
-              "value": "$data.firstName"
-            },
-            {
-              "entityField": "lastName",
-              "value": "$data.lastName"
+              "entityField": "name",
+              "value": "$data.name"
             },
             {
               "entityField": "email",
@@ -800,7 +883,7 @@
         {
           "type": "mutate",
           "field": "$clients",
-          "value": "$clients.map(el => ({ label: el.firstName + ' ' + el.lastName, value: el.id }))"
+          "value": "$clients.map(el => ({ label: el.name, value: el.id }))"
         },
         {
           "type": "return",
@@ -983,7 +1066,7 @@
         {
           "type": "mutate",
           "field": "$invoices",
-          "value": "$invoices.map(el => ({ label: '#' + el.id + ' ' + el.client.firstName + ' ' + el.client.lastName, value: el.id }))"
+          "value": "$invoices.map(el => ({ label: '#' + el.id + ' ' + el.client.name, value: el.id }))"
         },
         {
           "type": "return",
