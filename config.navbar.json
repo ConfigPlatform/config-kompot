@@ -21,11 +21,6 @@
               },
               {
                 "type": "link",
-                "href": "/product",
-                "text": "Products"
-              },
-              {
-                "type": "link",
                 "href": "/invoice",
                 "text": "Invoices"
               },

@@ -363,6 +363,18 @@
                       ]
                     },
                     {
+                      "name": "Paid",
+                      "content": [
+                        {
+                          "type": "text",
+                          "value": "$$paid",
+                          "vars": {
+                            "paymentSum": "$paid"
+                          }
+                        }
+                      ]
+                    },
+                    {
                       "name": "Status",
                       "content": [
                         {
@@ -433,80 +445,6 @@
               ]
             }
           ]
-        }
-      ]
-    },
-    {
-      "path": "/product",
-      "content": [
-        {
-          "type": "text",
-          "value": "Products",
-          "className": "text-3xl text-gray-900 font-medium"
-        },
-        {
-          "type": "button",
-          "text": "Add Product",
-          "serverHandler": "open_product_create_sidepanel"
-        },
-        {
-          "type": "table",
-          "select": "product_get_all",
-          "columns": [
-            {
-              "name": "ID",
-              "content": [
-                {
-                  "type": "text",
-                  "value": "$id",
-                  "vars": {
-                    "id": "$id"
-                  }
-                }
-              ]
-            },
-            {
-              "name": "Name",
-              "content": [
-                {
-                  "type": "text",
-                  "value": "$name",
-                  "vars": {
-                    "name": "$name"
-                  }
-                }
-              ]
-            },
-            {
-              "name": "Price",
-              "content": [
-                {
-                  "type": "text",
-                  "value": "$$price",
-                  "vars": {
-                    "price": "$price"
-                  }
-                }
-              ]
-            },
-            {
-              "name": "Description",
-              "content": [
-                {
-                  "type": "text",
-                  "value": "$description",
-                  "vars": {
-                    "description": "$description"
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "pagination",
-          "select": "product_get_all",
-          "className": "flex justify-center"
         }
       ]
     },

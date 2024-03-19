@@ -1,191 +1,6 @@
 {
   "handlers": [
     {
-      "name": "form_create_product_submit",
-      "actions": [
-        {
-          "type": "insert",
-          "entityName": "product",
-          "fields": [
-            {
-              "entityField": "name",
-              "value": "$data.name"
-            },
-            {
-              "entityField": "price",
-              "value": "$data.price"
-            },
-            {
-              "entityField": "description",
-              "value": "$data.description"
-            }
-          ],
-          "awaitResult": true
-        },
-        {
-          "type": "return",
-          "config": [
-            {
-              "clientHandler": "setMessage",
-              "id": "product_created",
-              "status": "success",
-              "duration": 2000,
-              "placement": "top-right",
-              "content": "Product was created"
-            },
-            {
-              "clientHandler": "redirectPage",
-              "path": "/product"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "form_create_invoice_submit",
-      "actions": [
-        {
-          "type": "variable",
-          "name": "dataPromiseResults",
-          "value": "null",
-          "as": "let"
-        },
-        {
-          "type": "variable",
-          "name": "invoice",
-          "value": "null",
-          "as": "let"
-        },
-        {
-          "type": "parallel",
-          "actions": [
-            {
-              "type": "select",
-              "entityName": "product",
-              "where": {
-                "name": "$data.product"
-              }
-            },
-            {
-              "type": "select",
-              "entityName": "client",
-              "where": {
-                "lastName": "$data.client"
-              }
-            }
-          ],
-          "assignToVar": "dataPromiseResults",
-          "awaitResult": true
-        },
-        {
-          "type": "variable",
-          "name": "[product, client]",
-          "value": "$dataPromiseResults",
-          "as": "let"
-        },
-        {
-          "type": "insert",
-          "entityName": "invoice",
-          "fields": [
-            {
-              "entityField": "client",
-              "value": "$client.id"
-            }
-          ],
-          "assignToVar": "invoice",
-          "awaitResult": true
-        },
-        {
-          "type": "parallel",
-          "actions": [
-            {
-              "type": "addRelation",
-              "entityName": "client",
-              "entityId": "$client.id",
-              "field": "invoices",
-              "addId": "$invoice.identifiers[0].id"
-            },
-            {
-              "type": "addRelation",
-              "entityName": "invoice",
-              "entityId": "$invoice.identifiers[0].id",
-              "field": "products",
-              "addId": "$product.id"
-            }
-          ],
-          "awaitResult": true
-        },
-        {
-          "type": "return",
-          "config": [
-            {
-              "clientHandler": "setMessage",
-              "id": "invoice_created",
-              "status": "success",
-              "duration": 2000,
-              "placement": "top-right",
-              "content": "Invoice was created"
-            },
-            {
-              "clientHandler": "redirectPage",
-              "path": "/invoice"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "form_create_client_submit",
-      "actions": [
-        {
-          "type": "mutate",
-          "field": "$data.firstName",
-          "value": "$data.firstName.toUpperCase()"
-        },
-        {
-          "type": "mutate",
-          "field": "$data.lastName",
-          "value": "$data.lastName.toUpperCase()"
-        },
-        {
-          "type": "insert",
-          "entityName": "client",
-          "fields": [
-            {
-              "entityField": "firstName",
-              "value": "$data.firstName"
-            },
-            {
-              "entityField": "lastName",
-              "value": "$data.lastName"
-            },
-            {
-              "entityField": "phone",
-              "value": "$data.phone"
-            }
-          ],
-          "awaitResult": true
-        },
-        {
-          "type": "return",
-          "config": [
-            {
-              "clientHandler": "setMessage",
-              "id": "client_created",
-              "status": "success",
-              "duration": 2000,
-              "placement": "top-right",
-              "content": "Client was created"
-            },
-            {
-              "clientHandler": "redirectPage",
-              "path": "/client"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "name": "invoice_search",
       "actions": [
         {
@@ -196,15 +11,16 @@
         },
         {
           "type": "select",
-          "entityName": "invoice",
-          "leftJoinAndSelect": [
-            [
-              "client",
-              "client"
-            ]
-          ],
+          "select": "invoice",
+          "from": {
+            "table": "invoice"
+          },
+          "leftJoinAndSelect": {
+            "column": "invoice.client",
+            "table": "client"
+          },
           "itemsPerPage": 10,
-          "multiple": true,
+          "getManyAndCount": true,
           "awaitResult": true,
           "assignToVar": "invoicesGetRes"
         },
@@ -213,36 +29,6 @@
           "data": {
             "items": "$invoicesGetRes[0]",
             "totalCount": "$invoicesGetRes[1]",
-            "pagination": {
-              "itemsPerPage": 10
-            }
-          },
-          "config": null
-        }
-      ]
-    },
-    {
-      "name": "product_get_all",
-      "actions": [
-        {
-          "type": "variable",
-          "name": "productsGetRes",
-          "value": "null",
-          "as": "let"
-        },
-        {
-          "type": "select",
-          "entityName": "product",
-          "itemsPerPage": 10,
-          "multiple": true,
-          "awaitResult": true,
-          "assignToVar": "productsGetRes"
-        },
-        {
-          "type": "return",
-          "data": {
-            "items": "$productsGetRes[0]",
-            "totalCount": "$productsGetRes[1]",
             "pagination": {
               "itemsPerPage": 10
             }
@@ -274,11 +60,18 @@
         },
         {
           "type": "select",
-          "entityName": "client",
+          "select": "client",
+          "from": {
+            "table": "client"
+          },
           "where": {
-            "id": "$data.params.id"
+            "table": "client",
+            "filters": {
+              "id": "$data.params.id"
+            }
           },
           "awaitResult": true,
+          "getOne": true,
           "assignToVar": "client"
         },
         {
@@ -311,11 +104,39 @@
         },
         {
           "type": "select",
-          "entityName": "invoice",
-          "multiple": true,
-          "where": {
-            "client": "$data.params.id"
+          "select": [
+            {
+              "column": "invoice.id",
+              "alias": "id"
+            },
+            {
+              "column": "SUM(payment.amount)",
+              "alias": "paymentSum"
+            },
+            {
+              "column": "invoice.amount",
+              "alias": "amount"
+            },
+            {
+              "column": "invoice.status",
+              "alias": "status"
+            }
+          ],
+          "from": {
+            "table": "invoice"
           },
+          "leftJoin": {
+            "table": "payment",
+            "condition": "payment.invoiceId = invoice.id"
+          },
+          "where": {
+            "table": "invoice",
+            "filters": {
+              "client": "$data.params.id"
+            }
+          },
+          "groupBy": "invoice.id",
+          "getRawMany": true,
           "awaitResult": true,
           "assignToVar": "invoices"
         },
@@ -349,11 +170,17 @@
         },
         {
           "type": "select",
-          "entityName": "payment",
-          "multiple": true,
-          "where": {
-            "client": "$data.params.id"
+          "select": "payment",
+          "from": {
+            "table": "payment"
           },
+          "where": {
+            "table": "payment",
+            "filters": {
+              "client": "$data.params.id"
+            }
+          },
+          "getMany": true,
           "awaitResult": true,
           "assignToVar": "payments"
         },
@@ -379,10 +206,17 @@
           "onMatch": [
             {
               "type": "select",
-              "entityName": "client",
+              "select": "client",
+              "from": {
+                "table": "client"
+              },
+              "where": {
+                "table": "client",
+                "filters": "$data.filters"
+              },
               "orderBy": "$data.sorting",
-              "where": "$data.filters",
               "itemsPerPage": 10,
+              "getManyAndCount": true,
               "awaitResult": true,
               "assignToVar": "clientsGetRes"
             },
@@ -406,8 +240,12 @@
           "onMatch": [
             {
               "type": "select",
-              "entityName": "client",
+              "select": "client",
+              "from": {
+                "table": "client"
+              },
               "itemsPerPage": 10,
+              "getManyAndCount": true,
               "awaitResult": true,
               "assignToVar": "clientsGetRes"
             },
@@ -431,9 +269,16 @@
           "onMatch": [
             {
               "type": "select",
-              "entityName": "client",
-              "where": "$data.filters",
+              "select": "client",
+              "from": {
+                "table": "client"
+              },
+              "where": {
+                "table": "client",
+                "filters": "$data.filters"
+              },
               "itemsPerPage": 10,
+              "getManyAndCount": true,
               "awaitResult": true,
               "assignToVar": "clientsGetRes"
             },
@@ -457,9 +302,13 @@
           "onMatch": [
             {
               "type": "select",
-              "entityName": "client",
+              "select": "client",
+              "from": {
+                "table": "client"
+              },
               "orderBy": "$data.sorting",
               "itemsPerPage": 10,
+              "getManyAndCount": true,
               "awaitResult": true,
               "assignToVar": "clientsGetRes"
             },
@@ -476,107 +325,6 @@
             }
           ],
           "onNotMatch": []
-        }
-      ]
-    },
-    {
-      "name": "form_create_product_cancel",
-      "actions": [
-        {
-          "type": "return",
-          "config": [
-            {
-              "clientHandler": "redirectPage",
-              "path": "/product"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "form_create_invoice_cancel",
-      "actions": [
-        {
-          "type": "return",
-          "config": [
-            {
-              "clientHandler": "redirectPage",
-              "path": "/invoice"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "open_product_create_sidepanel",
-      "actions": [
-        {
-          "type": "return",
-          "config": [
-            {
-              "clientHandler": "openSidepanel",
-              "id": "create_product"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "close_product_create_sidepanel",
-      "actions": [
-        {
-          "type": "return",
-          "config": [
-            {
-              "clientHandler": "closeSidepanel",
-              "id": "create_product"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "product_create_sidepanel_submit",
-      "actions": [
-        {
-          "type": "insert",
-          "entityName": "product",
-          "fields": [
-            {
-              "entityField": "name",
-              "value": "$data.name"
-            },
-            {
-              "entityField": "price",
-              "value": "$data.price"
-            },
-            {
-              "entityField": "description",
-              "value": "$data.description"
-            }
-          ],
-          "awaitResult": true
-        },
-        {
-          "type": "return",
-          "config": [
-            {
-              "clientHandler": "closeSidepanel",
-              "id": "create_product"
-            },
-            {
-              "clientHandler": "refreshData",
-              "select": "product_get_all"
-            },
-            {
-              "clientHandler": "setMessage",
-              "id": "product_created",
-              "status": "success",
-              "duration": 2000,
-              "placement": "top-right",
-              "content": "Product was created"
-            }
-          ]
         }
       ]
     },
@@ -619,30 +367,28 @@
         },
         {
           "type": "select",
-          "entityName": "client",
-          "where": {
-            "id": "$data.client"
+          "select": "client",
+          "from": {
+            "table": "client"
           },
+          "where": {
+            "table": "client",
+            "filters": {
+              "id": "$data.client"
+            }
+          },
+          "getOne": true,
           "awaitResult": true,
           "assignToVar": "client"
         },
         {
           "type": "insert",
-          "entityName": "invoice",
-          "fields": [
-            {
-              "entityField": "amount",
-              "value": "$data.amount"
-            },
-            {
-              "entityField": "status",
-              "value": "draft"
-            },
-            {
-              "entityField": "client",
-              "value": "$client.id"
-            }
-          ],
+          "table": "invoice",
+          "data": {
+            "amount": "$data.amount",
+            "status": "draft",
+            "client": "$client.id"
+          },
           "awaitResult": true
         },
         {
@@ -663,85 +409,6 @@
               "duration": 2000,
               "placement": "top-right",
               "content": "Invoice was created"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "open_client_create_modal",
-      "actions": [
-        {
-          "type": "return",
-          "config": [
-            {
-              "clientHandler": "openModal",
-              "id": "create_client"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "close_client_create_modal",
-      "actions": [
-        {
-          "type": "return",
-          "config": [
-            {
-              "clientHandler": "closeModal",
-              "id": "create_client"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "client_create_modal_submit",
-      "actions": [
-        {
-          "type": "mutate",
-          "field": "$data.firstName",
-          "value": "$data.firstName.toUpperCase()"
-        },
-        {
-          "type": "mutate",
-          "field": "$data.lastName",
-          "value": "$data.lastName.toUpperCase()"
-        },
-        {
-          "type": "insert",
-          "entityName": "client",
-          "fields": [
-            {
-              "entityField": "firstName",
-              "value": "$data.firstName"
-            },
-            {
-              "entityField": "lastName",
-              "value": "$data.lastName"
-            },
-            {
-              "entityField": "phone",
-              "value": "$data.phone"
-            }
-          ],
-          "awaitResult": true
-        },
-        {
-          "type": "return",
-          "config": [
-            {
-              "clientHandler": "closeModal",
-              "id": "create_client"
-            },
-            {
-              "clientHandler": "setMessage",
-              "id": "client_created",
-              "status": "success",
-              "duration": 2000,
-              "placement": "top-right",
-              "content": "Client was created"
             }
           ]
         }
@@ -772,20 +439,6 @@
               "duration": 2000,
               "placement": "top-right",
               "content": "Client was deleted"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "form_create_client_cancel",
-      "actions": [
-        {
-          "type": "return",
-          "config": [
-            {
-              "clientHandler": "redirectPage",
-              "path": "/client"
             }
           ]
         }
@@ -824,21 +477,8 @@
       "actions": [
         {
           "type": "insert",
-          "entityName": "client",
-          "fields": [
-            {
-              "entityField": "name",
-              "value": "$data.name"
-            },
-            {
-              "entityField": "email",
-              "value": "$data.email"
-            },
-            {
-              "entityField": "phone",
-              "value": "$data.phone"
-            }
-          ],
+          "table": "client",
+          "data": "$data",
           "awaitResult": true
         },
         {
@@ -875,8 +515,11 @@
         },
         {
           "type": "select",
-          "entityName": "client",
-          "multiple": true,
+          "select": "client",
+          "from": {
+            "table": "client"
+          },
+          "getMany": true,
           "awaitResult": true,
           "assignToVar": "clients"
         },
@@ -903,19 +546,22 @@
         },
         {
           "type": "select",
-          "entityName": "payment",
+          "select": "payment",
+          "from": {
+            "table": "payment"
+          },
           "leftJoinAndSelect": [
-            [
-              "client",
-              "client"
-            ],
-            [
-              "invoice",
-              "invoice"
-            ]
+            {
+              "column": "payment.client",
+              "table": "client"
+            },
+            {
+              "column": "payment.invoice",
+              "table": "invoice"
+            }
           ],
           "itemsPerPage": 10,
-          "multiple": true,
+          "getManyAndCount": true,
           "awaitResult": true,
           "assignToVar": "paymentsGetRes"
         },
@@ -949,45 +595,48 @@
         },
         {
           "type": "select",
-          "entityName": "invoice",
-          "leftJoinAndSelect": [
-            [
-              "client",
-              "client"
-            ]
-          ],
-          "where": {
-            "id": "$data.invoice"
+          "select": "invoice",
+          "from": {
+            "table": "invoice"
           },
+          "leftJoinAndSelect": {
+            "column": "invoice.client",
+            "table": "client"
+          },
+          "where": {
+            "table": "invoice",
+            "filters": {
+              "id": "$data.invoice"
+            }
+          },
+          "getOne": true,
           "awaitResult": true,
           "assignToVar": "invoice"
         },
         {
           "type": "select",
-          "entityName": "client",
-          "where": {
-            "id": "$invoice.client.id"
+          "select": "client",
+          "from": {
+            "table": "client"
           },
+          "where": {
+            "table": "client",
+            "filters": {
+              "id": "$invoice.client.id"
+            }
+          },
+          "getOne": true,
           "awaitResult": true,
           "assignToVar": "client"
         },
         {
           "type": "insert",
-          "entityName": "payment",
-          "fields": [
-            {
-              "entityField": "amount",
-              "value": "$data.amount"
-            },
-            {
-              "entityField": "invoice",
-              "value": "$invoice.id"
-            },
-            {
-              "entityField": "client",
-              "value": "$client.id"
-            }
-          ],
+          "table": "payment",
+          "data": {
+            "amount": "$data.amount",
+            "invoice": "$data.invoice",
+            "client": "$invoice.client.id"
+          },
           "awaitResult": true
         },
         {
@@ -1052,14 +701,15 @@
         },
         {
           "type": "select",
-          "entityName": "invoice",
-          "leftJoinAndSelect": [
-            [
-              "client",
-              "client"
-            ]
-          ],
-          "multiple": true,
+          "select": "invoice",
+          "from": {
+            "table": "invoice"
+          },
+          "leftJoinAndSelect": {
+            "column": "invoice.client",
+            "table": "client"
+          },
+          "getMany": true,
           "awaitResult": true,
           "assignToVar": "invoices"
         },
