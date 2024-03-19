@@ -271,7 +271,7 @@
                   "content": [
                     {
                       "type": "col",
-                      "width": 1,
+                      "width": 5,
                       "content": [
                         {
                           "type": "text",
