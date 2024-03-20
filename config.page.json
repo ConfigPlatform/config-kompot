@@ -81,9 +81,9 @@
                     {
                       "type": "button",
                       "data": {
-                        "id": "$id"
+                        "clientId": "id"
                       },
-                      "serverHandler": "client_delete_one",
+                      "serverHandler": "client_delete_by_id",
                       "text": "Delete",
                       "variant": "danger",
                       "className": "w-full mx-0"
@@ -252,9 +252,9 @@
                     {
                       "type": "button",
                       "data": {
-                        "id": "$id"
+                        "clientId": "id"
                       },
-                      "serverHandler": "client_delete_one",
+                      "serverHandler": "client_delete_by_id",
                       "text": "Delete",
                       "variant": "danger",
                       "className": "w-full mx-0"
@@ -293,21 +293,6 @@
                       "vars": {
                         "name": "$name"
                       }
-                    },
-                    {
-                      "type": "text",
-                      "value": "Name:",
-                      "className": "font-medium block"
-                    },
-                    {
-                      "type": "text",
-                      "value": "Email:",
-                      "className": "font-medium block"
-                    },
-                    {
-                      "type": "text",
-                      "value": "Phone:",
-                      "className": "font-medium block"
                     }
                   ]
                 },

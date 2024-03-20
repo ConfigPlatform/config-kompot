@@ -161,7 +161,7 @@
                 },
                 {
                   "name": "leadStatus",
-                  "label": "leadStatus",
+                  "label": "Lead Status",
                   "type": "text",
                   "required": true
                 }

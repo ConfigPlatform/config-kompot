@@ -4,13 +4,13 @@
       "name": "invoice_search",
       "actions": [
         {
-          "type": "variable",
+          "type": "VARIABLE_DEFINE",
           "name": "invoicesGetRes",
           "value": "null",
           "as": "let"
         },
         {
-          "type": "select",
+          "type": "TABLE_DATA_SELECT",
           "select": "invoice",
           "from": {
             "table": "invoice"
@@ -25,7 +25,7 @@
           "assignToVar": "invoicesGetRes"
         },
         {
-          "type": "return",
+          "type": "RETURN",
           "data": {
             "items": "$invoicesGetRes[0]",
             "totalCount": "$invoicesGetRes[1]",
@@ -41,17 +41,17 @@
       "name": "client_get_by_id",
       "actions": [
         {
-          "type": "variable",
+          "type": "VARIABLE_DEFINE",
           "name": "client",
           "value": "{}",
           "as": "let"
         },
         {
-          "type": "condition",
+          "type": "CONDITION",
           "condition": "!$data.params.id",
           "onMatch": [
             {
-              "type": "return",
+              "type": "RETURN",
               "data": "$client",
               "config": []
             }
@@ -59,7 +59,7 @@
           "onNotMatch": []
         },
         {
-          "type": "select",
+          "type": "TABLE_DATA_SELECT",
           "select": "client",
           "from": {
             "table": "client"
@@ -75,7 +75,7 @@
           "assignToVar": "client"
         },
         {
-          "type": "return",
+          "type": "RETURN",
           "data": "$client",
           "config": []
         }
@@ -85,17 +85,17 @@
       "name": "invoice_get_by_client",
       "actions": [
         {
-          "type": "variable",
+          "type": "VARIABLE_DEFINE",
           "name": "invoices",
           "value": "[]",
           "as": "let"
         },
         {
-          "type": "condition",
+          "type": "CONDITION",
           "condition": "!$data.params.id",
           "onMatch": [
             {
-              "type": "return",
+              "type": "RETURN",
               "data": "$invoices",
               "config": []
             }
@@ -103,7 +103,7 @@
           "onNotMatch": []
         },
         {
-          "type": "select",
+          "type": "TABLE_DATA_SELECT",
           "select": [
             {
               "column": "invoice.id",
@@ -141,7 +141,7 @@
           "assignToVar": "invoices"
         },
         {
-          "type": "return",
+          "type": "RETURN",
           "data": "$invoices",
           "config": null
         }
@@ -151,17 +151,17 @@
       "name": "payment_get_by_client",
       "actions": [
         {
-          "type": "variable",
+          "type": "VARIABLE_DEFINE",
           "name": "payments",
           "value": "[]",
           "as": "let"
         },
         {
-          "type": "condition",
+          "type": "CONDITION",
           "condition": "!$data.params.id",
           "onMatch": [
             {
-              "type": "return",
+              "type": "RETURN",
               "data": "$payments",
               "config": []
             }
@@ -169,7 +169,7 @@
           "onNotMatch": []
         },
         {
-          "type": "select",
+          "type": "TABLE_DATA_SELECT",
           "select": "payment",
           "from": {
             "table": "payment"
@@ -185,7 +185,7 @@
           "assignToVar": "payments"
         },
         {
-          "type": "return",
+          "type": "RETURN",
           "data": "$payments",
           "config": null
         }
@@ -195,17 +195,17 @@
       "name": "client_search",
       "actions": [
         {
-          "type": "variable",
+          "type": "VARIABLE_DEFINE",
           "name": "clientsGetRes",
           "value": "null",
           "as": "let"
         },
         {
-          "type": "condition",
+          "type": "CONDITION",
           "condition": "$data.filters && $data.sorting",
           "onMatch": [
             {
-              "type": "select",
+              "type": "TABLE_DATA_SELECT",
               "select": "client",
               "from": {
                 "table": "client"
@@ -214,14 +214,16 @@
                 "table": "client",
                 "filters": "$data.filters"
               },
-              "orderBy": "$data.sorting",
+              "orderBy": {
+                "client.id": "$data.sorting.id"
+              },
               "itemsPerPage": 10,
               "getManyAndCount": true,
               "awaitResult": true,
               "assignToVar": "clientsGetRes"
             },
             {
-              "type": "return",
+              "type": "RETURN",
               "data": {
                 "items": "$clientsGetRes[0]",
                 "totalCount": "$clientsGetRes[1]",
@@ -235,11 +237,11 @@
           "onNotMatch": []
         },
         {
-          "type": "condition",
+          "type": "CONDITION",
           "condition": "!$data.filters && !$data.sorting",
           "onMatch": [
             {
-              "type": "select",
+              "type": "TABLE_DATA_SELECT",
               "select": "client",
               "from": {
                 "table": "client"
@@ -250,7 +252,7 @@
               "assignToVar": "clientsGetRes"
             },
             {
-              "type": "return",
+              "type": "RETURN",
               "data": {
                 "items": "$clientsGetRes[0]",
                 "totalCount": "$clientsGetRes[1]",
@@ -264,11 +266,11 @@
           "onNotMatch": []
         },
         {
-          "type": "condition",
+          "type": "CONDITION",
           "condition": "$data.filters",
           "onMatch": [
             {
-              "type": "select",
+              "type": "TABLE_DATA_SELECT",
               "select": "client",
               "from": {
                 "table": "client"
@@ -283,7 +285,7 @@
               "assignToVar": "clientsGetRes"
             },
             {
-              "type": "return",
+              "type": "RETURN",
               "data": {
                 "items": "$clientsGetRes[0]",
                 "totalCount": "$clientsGetRes[1]",
@@ -297,23 +299,25 @@
           "onNotMatch": []
         },
         {
-          "type": "condition",
+          "type": "CONDITION",
           "condition": "$data.sorting",
           "onMatch": [
             {
-              "type": "select",
+              "type": "TABLE_DATA_SELECT",
               "select": "client",
               "from": {
                 "table": "client"
               },
-              "orderBy": "$data.sorting",
+              "orderBy": {
+                "client.id": "$data.sorting.id"
+              },
               "itemsPerPage": 10,
               "getManyAndCount": true,
               "awaitResult": true,
               "assignToVar": "clientsGetRes"
             },
             {
-              "type": "return",
+              "type": "RETURN",
               "data": {
                 "items": "$clientsGetRes[0]",
                 "totalCount": "$clientsGetRes[1]",
@@ -332,10 +336,10 @@
       "name": "open_invoice_create_sidepanel",
       "actions": [
         {
-          "type": "return",
+          "type": "RETURN",
           "config": [
             {
-              "clientHandler": "openSidepanel",
+              "clientHandler": "SIDEPANEL_OPEN",
               "id": "create_invoice"
             }
           ]
@@ -346,10 +350,10 @@
       "name": "close_invoice_create_sidepanel",
       "actions": [
         {
-          "type": "return",
+          "type": "RETURN",
           "config": [
             {
-              "clientHandler": "closeSidepanel",
+              "clientHandler": "SIDEPANEL_CLOSE",
               "id": "create_invoice"
             }
           ]
@@ -360,13 +364,13 @@
       "name": "invoice_create_sidepanel_submit",
       "actions": [
         {
-          "type": "variable",
+          "type": "VARIABLE_DEFINE",
           "name": "client",
           "value": "null",
           "as": "let"
         },
         {
-          "type": "select",
+          "type": "TABLE_DATA_SELECT",
           "select": "client",
           "from": {
             "table": "client"
@@ -382,7 +386,7 @@
           "assignToVar": "client"
         },
         {
-          "type": "insert",
+          "type": "TABLE_RECORD_CREATE",
           "table": "invoice",
           "data": {
             "amount": "$data.amount",
@@ -392,18 +396,18 @@
           "awaitResult": true
         },
         {
-          "type": "return",
+          "type": "RETURN",
           "config": [
             {
-              "clientHandler": "closeSidepanel",
+              "clientHandler": "SIDEPANEL_CLOSE",
               "id": "create_invoice"
             },
             {
-              "clientHandler": "refreshData",
+              "clientHandler": "DATA_REFRESH",
               "select": "invoice_search"
             },
             {
-              "clientHandler": "setMessage",
+              "clientHandler": "MESSAGE_DISPLAY",
               "id": "invoice_created",
               "status": "success",
               "duration": 2000,
@@ -415,25 +419,30 @@
       ]
     },
     {
-      "name": "client_delete_one",
+      "name": "client_delete_by_id",
       "actions": [
         {
-          "type": "delete",
-          "entityName": "client",
+          "type": "TABLE_RECORD_DELETE",
+          "from": {
+            "table": "client"
+          },
           "where": {
-            "id": "$data.id"
+            "table": "client",
+            "filters": {
+              "id": "$data.clientId"
+            }
           },
           "awaitResult": true
         },
         {
-          "type": "return",
+          "type": "RETURN",
           "config": [
             {
-              "clientHandler": "refreshData",
+              "clientHandler": "DATA_REFRESH",
               "select": "client_search"
             },
             {
-              "clientHandler": "setMessage",
+              "clientHandler": "MESSAGE_DISPLAY",
               "id": "client_deleted",
               "status": "success",
               "duration": 2000,
@@ -448,10 +457,10 @@
       "name": "open_client_create_sidepanel",
       "actions": [
         {
-          "type": "return",
+          "type": "RETURN",
           "config": [
             {
-              "clientHandler": "openSidepanel",
+              "clientHandler": "SIDEPANEL_OPEN",
               "id": "create_client"
             }
           ]
@@ -462,10 +471,10 @@
       "name": "close_client_create_sidepanel",
       "actions": [
         {
-          "type": "return",
+          "type": "RETURN",
           "config": [
             {
-              "clientHandler": "closeSidepanel",
+              "clientHandler": "SIDEPANEL_CLOSE",
               "id": "create_client"
             }
           ]
@@ -476,24 +485,24 @@
       "name": "client_create_sidepanel_submit",
       "actions": [
         {
-          "type": "insert",
+          "type": "TABLE_RECORD_CREATE",
           "table": "client",
           "data": "$data",
           "awaitResult": true
         },
         {
-          "type": "return",
+          "type": "RETURN",
           "config": [
             {
-              "clientHandler": "closeSidepanel",
+              "clientHandler": "SIDEPANEL_CLOSE",
               "id": "create_client"
             },
             {
-              "clientHandler": "refreshData",
+              "clientHandler": "DATA_REFRESH",
               "select": "client_search"
             },
             {
-              "clientHandler": "setMessage",
+              "clientHandler": "MESSAGE_DISPLAY",
               "id": "client_created",
               "status": "success",
               "duration": 2000,
@@ -508,13 +517,13 @@
       "name": "invoice_create_default_values",
       "actions": [
         {
-          "type": "variable",
+          "type": "VARIABLE_DEFINE",
           "name": "clients",
           "value": "null",
           "as": "let"
         },
         {
-          "type": "select",
+          "type": "TABLE_DATA_SELECT",
           "select": "client",
           "from": {
             "table": "client"
@@ -524,12 +533,12 @@
           "assignToVar": "clients"
         },
         {
-          "type": "mutate",
-          "field": "$clients",
+          "type": "VARIABLE_UPDATE",
+          "variable": "clients",
           "value": "$clients.map(el => ({ label: el.name, value: el.id }))"
         },
         {
-          "type": "return",
+          "type": "RETURN",
           "data": "{ $clients }",
           "config": null
         }
@@ -539,13 +548,13 @@
       "name": "payment_search",
       "actions": [
         {
-          "type": "variable",
+          "type": "VARIABLE_DEFINE",
           "name": "paymentsGetRes",
           "value": "null",
           "as": "let"
         },
         {
-          "type": "select",
+          "type": "TABLE_DATA_SELECT",
           "select": "payment",
           "from": {
             "table": "payment"
@@ -566,7 +575,7 @@
           "assignToVar": "paymentsGetRes"
         },
         {
-          "type": "return",
+          "type": "RETURN",
           "data": {
             "items": "$paymentsGetRes[0]",
             "totalCount": "$paymentsGetRes[1]",
@@ -582,19 +591,19 @@
       "name": "payment_create_sidepanel_submit",
       "actions": [
         {
-          "type": "variable",
+          "type": "VARIABLE_DEFINE",
           "name": "invoice",
           "value": "null",
           "as": "let"
         },
         {
-          "type": "variable",
+          "type": "VARIABLE_DEFINE",
           "name": "client",
           "value": "null",
           "as": "let"
         },
         {
-          "type": "select",
+          "type": "TABLE_DATA_SELECT",
           "select": "invoice",
           "from": {
             "table": "invoice"
@@ -614,7 +623,7 @@
           "assignToVar": "invoice"
         },
         {
-          "type": "select",
+          "type": "TABLE_DATA_SELECT",
           "select": "client",
           "from": {
             "table": "client"
@@ -630,7 +639,7 @@
           "assignToVar": "client"
         },
         {
-          "type": "insert",
+          "type": "TABLE_RECORD_CREATE",
           "table": "payment",
           "data": {
             "amount": "$data.amount",
@@ -640,18 +649,18 @@
           "awaitResult": true
         },
         {
-          "type": "return",
+          "type": "RETURN",
           "config": [
             {
-              "clientHandler": "closeSidepanel",
+              "clientHandler": "SIDEPANEL_CLOSE",
               "id": "create_payment"
             },
             {
-              "clientHandler": "refreshData",
+              "clientHandler": "DATA_REFRESH",
               "select": "payment_search"
             },
             {
-              "clientHandler": "setMessage",
+              "clientHandler": "MESSAGE_DISPLAY",
               "id": "payment_created",
               "status": "success",
               "duration": 2000,
@@ -666,10 +675,10 @@
       "name": "payment_create_sidepanel_close",
       "actions": [
         {
-          "type": "return",
+          "type": "RETURN",
           "config": [
             {
-              "clientHandler": "closeSidepanel",
+              "clientHandler": "SIDEPANEL_CLOSE",
               "id": "create_payment"
             }
           ]
@@ -680,10 +689,10 @@
       "name": "payment_create_sidepanel_open",
       "actions": [
         {
-          "type": "return",
+          "type": "RETURN",
           "config": [
             {
-              "clientHandler": "openSidepanel",
+              "clientHandler": "SIDEPANEL_OPEN",
               "id": "create_payment"
             }
           ]
@@ -694,13 +703,13 @@
       "name": "payment_create_default_values",
       "actions": [
         {
-          "type": "variable",
+          "type": "VARIABLE_DEFINE",
           "name": "invoices",
           "value": "null",
           "as": "let"
         },
         {
-          "type": "select",
+          "type": "TABLE_DATA_SELECT",
           "select": "invoice",
           "from": {
             "table": "invoice"
@@ -714,12 +723,12 @@
           "assignToVar": "invoices"
         },
         {
-          "type": "mutate",
-          "field": "$invoices",
+          "type": "VARIABLE_UPDATE",
+          "variable": "invoices",
           "value": "$invoices.map(el => ({ label: '#' + el.id + ' ' + el.client.name, value: el.id }))"
         },
         {
-          "type": "return",
+          "type": "RETURN",
           "data": "{ $invoices }",
           "config": null
         }
