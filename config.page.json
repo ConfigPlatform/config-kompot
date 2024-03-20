@@ -429,9 +429,9 @@
                       "content": [
                         {
                           "type": "text",
-                          "value": "#$id",
+                          "value": "#$invoiceId",
                           "vars": {
-                            "id": "$id"
+                            "invoice.id": "$invoiceId"
                           }
                         }
                       ]
