@@ -152,6 +152,18 @@
                   "label": "Phone",
                   "type": "text",
                   "required": true
+                },
+                {
+                  "name": "leadSource",
+                  "label": "Lead Source",
+                  "type": "text",
+                  "required": true
+                },
+                {
+                  "name": "leadStatus",
+                  "label": "leadStatus",
+                  "type": "text",
+                  "required": true
                 }
               ],
               "actions": [

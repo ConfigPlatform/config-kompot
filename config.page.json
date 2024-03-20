@@ -118,19 +118,19 @@
               "content": [
                 {
                   "type": "filter",
-                  "placeholder": "Enter name",
+                  "placeholder": "Name",
                   "filterBy": "name",
                   "select": "client_search"
                 },
                 {
                   "type": "filter",
-                  "placeholder": "Enter email",
+                  "placeholder": "Email",
                   "filterBy": "email",
                   "select": "client_search"
                 },
                 {
                   "type": "filter",
-                  "placeholder": "Enter phone",
+                  "placeholder": "Phone",
                   "filterBy": "phone",
                   "select": "client_search"
                 },
@@ -178,7 +178,7 @@
               "content": [
                 {
                   "type": "link",
-                  "className": "mx-0",
+                  "className": "",
                   "href": "/client/$id",
                   "text": "$name",
                   "vars": {
@@ -208,6 +208,30 @@
                   "value": "$phone",
                   "vars": {
                     "phone": "$phone"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Lead Source",
+              "content": [
+                {
+                  "type": "text",
+                  "value": "$leadSource",
+                  "vars": {
+                    "leadSource": "$leadSource"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Lead Status",
+              "content": [
+                {
+                  "type": "text",
+                  "value": "$leadStatus",
+                  "vars": {
+                    "leadStatus": "$leadStatus"
                   }
                 }
               ]
@@ -256,69 +280,56 @@
           "select": "client_get_by_id",
           "content": [
             {
-              "type": "image",
-              "src": "https://www.iprcenter.gov/image-repository/blank-profile-picture.png/@@images/image.png",
-              "alt": "avatar",
-              "className": "h-auto w-14 rounded-sm"
-            },
-            {
-              "type": "col",
-              "width": 6,
-              "className": "my-2",
+              "type": "row",
               "content": [
                 {
-                  "type": "row",
+                  "type": "col",
+                  "width": 1,
                   "content": [
                     {
-                      "type": "col",
-                      "width": 1,
-                      "content": [
-                        {
-                          "type": "text",
-                          "value": "Name:",
-                          "className": "font-medium block"
-                        },
-                        {
-                          "type": "text",
-                          "value": "Email:",
-                          "className": "font-medium block"
-                        },
-                        {
-                          "type": "text",
-                          "value": "Phone:",
-                          "className": "font-medium block"
-                        }
-                      ]
+                      "type": "text",
+                      "value": "$name",
+                      "className": "text-3xl font-medium block",
+                      "vars": {
+                        "name": "$name"
+                      }
                     },
                     {
-                      "type": "col",
-                      "width": 5,
-                      "content": [
-                        {
-                          "type": "text",
-                          "value": "$name",
-                          "className": "block",
-                          "vars": {
-                            "name": "$name"
-                          }
-                        },
-                        {
-                          "type": "text",
-                          "value": "$email",
-                          "className": "block",
-                          "vars": {
-                            "email": "$email"
-                          }
-                        },
-                        {
-                          "type": "text",
-                          "value": "$phone",
-                          "className": "block",
-                          "vars": {
-                            "phone": "$phone"
-                          }
-                        }
-                      ]
+                      "type": "text",
+                      "value": "Name:",
+                      "className": "font-medium block"
+                    },
+                    {
+                      "type": "text",
+                      "value": "Email:",
+                      "className": "font-medium block"
+                    },
+                    {
+                      "type": "text",
+                      "value": "Phone:",
+                      "className": "font-medium block"
+                    }
+                  ]
+                },
+                {
+                  "type": "col",
+                  "width": 5,
+                  "content": [
+                    {
+                      "type": "text",
+                      "value": "$email",
+                      "className": "block",
+                      "vars": {
+                        "email": "$email"
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "value": "$phone",
+                      "className": "block",
+                      "vars": {
+                        "phone": "$phone"
+                      }
                     }
                   ]
                 }

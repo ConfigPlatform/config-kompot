@@ -23,6 +23,20 @@
           "options": {
             "type": "varchar"
           }
+        },
+        {
+          "name": "leadSource",
+          "type": "string",
+          "options": {
+            "type": "varchar"
+          }
+        },
+        {
+          "name": "leadStatus",
+          "type": "string",
+          "options": {
+            "type": "varchar"
+          }
         }
       ]
     },
@@ -32,12 +46,16 @@
         {
           "name": "amount",
           "type": "number",
-          "options": {"type": "int"}
+          "options": {
+            "type": "int"
+          }
         },
         {
           "name": "status",
           "type": "string",
-          "options": {"type": "varchar"}
+          "options": {
+            "type": "varchar"
+          }
         },
         {
           "name": "client",
