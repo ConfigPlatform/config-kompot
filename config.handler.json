@@ -26,8 +26,8 @@
         {
           "type": "RETURN",
           "data": {
-            "items": "$invoicesGetRes[0]",
-            "totalCount": "$invoicesGetRes[1]",
+            "items": "{{ invoicesGetRes[0] }}",
+            "totalCount": "{{ invoicesGetRes[1] }}",
             "pagination": {
               "itemsPerPage": 10
             }
@@ -46,11 +46,11 @@
         },
         {
           "type": "CONDITION",
-          "condition": "!$data.params.id",
+          "condition": "!data.params.id",
           "onMatch": [
             {
               "type": "RETURN",
-              "data": "$client",
+              "data": "{{ client }}",
               "config": []
             }
           ],
@@ -74,7 +74,7 @@
         },
         {
           "type": "RETURN",
-          "data": "$client",
+          "data": "{{ client }}",
           "config": []
         }
       ]
@@ -89,11 +89,11 @@
         },
         {
           "type": "CONDITION",
-          "condition": "!$data.params.id",
+          "condition": "!data.params.id",
           "onMatch": [
             {
               "type": "RETURN",
-              "data": "$invoices",
+              "data": "{{ invoices }}",
               "config": []
             }
           ],
@@ -139,7 +139,7 @@
         },
         {
           "type": "RETURN",
-          "data": "$invoices",
+          "data": "{{ invoices }}",
           "config": null
         }
       ]
@@ -154,11 +154,11 @@
         },
         {
           "type": "CONDITION",
-          "condition": "!$data.params.id",
+          "condition": "!data.params.id",
           "onMatch": [
             {
               "type": "RETURN",
-              "data": "$payments",
+              "data": "{{ payments }}",
               "config": []
             }
           ],
@@ -186,7 +186,7 @@
         },
         {
           "type": "RETURN",
-          "data": "$payments",
+          "data": "{{ payments }}",
           "config": null
         }
       ]
@@ -201,7 +201,7 @@
         },
         {
           "type": "CONDITION",
-          "condition": "$data.filters && $data.sorting",
+          "condition": "data.filters && data.sorting",
           "onMatch": [
             {
               "type": "TABLE_DATA_SELECT",
@@ -228,8 +228,8 @@
             {
               "type": "RETURN",
               "data": {
-                "items": "$clientsGetRes[0]",
-                "totalCount": "$clientsGetRes[1]",
+                "items": "{{ clientsGetRes[0] }}",
+                "totalCount": "{{ clientsGetRes[1] }}",
                 "pagination": {
                   "itemsPerPage": 10
                 }
@@ -241,7 +241,7 @@
         },
         {
           "type": "CONDITION",
-          "condition": "!$data.filters && !$data.sorting",
+          "condition": "!data.filters && !data.sorting",
           "onMatch": [
             {
               "type": "TABLE_DATA_SELECT",
@@ -257,8 +257,8 @@
             {
               "type": "RETURN",
               "data": {
-                "items": "$clientsGetRes[0]",
-                "totalCount": "$clientsGetRes[1]",
+                "items": "{{ clientsGetRes[0] }}",
+                "totalCount": "{{ clientsGetRes[1] }}",
                 "pagination": {
                   "itemsPerPage": 10
                 }
@@ -270,7 +270,7 @@
         },
         {
           "type": "CONDITION",
-          "condition": "$data.filters",
+          "condition": "data.filters",
           "onMatch": [
             {
               "type": "TABLE_DATA_SELECT",
@@ -294,8 +294,8 @@
             {
               "type": "RETURN",
               "data": {
-                "items": "$clientsGetRes[0]",
-                "totalCount": "$clientsGetRes[1]",
+                "items": "{{ clientsGetRes[0] }}",
+                "totalCount": "{{ clientsGetRes[1] }}",
                 "pagination": {
                   "itemsPerPage": 10
                 }
@@ -307,7 +307,7 @@
         },
         {
           "type": "CONDITION",
-          "condition": "$data.sorting",
+          "condition": "data.sorting",
           "onMatch": [
             {
               "type": "TABLE_DATA_SELECT",
@@ -326,8 +326,8 @@
             {
               "type": "RETURN",
               "data": {
-                "items": "$clientsGetRes[0]",
-                "totalCount": "$clientsGetRes[1]",
+                "items": "{{ clientsGetRes[0] }}",
+                "totalCount": "{{ clientsGetRes[1] }}",
                 "pagination": {
                   "itemsPerPage": 10
                 }
@@ -395,9 +395,9 @@
           "type": "TABLE_RECORD_CREATE",
           "table": "invoice",
           "data": {
-            "amount": "$data.amount",
+            "amount": "{{ data.amount }}",
             "status": "draft",
-            "client": "$client.id"
+            "client": "{{ client.id }}"
           },
           "awaitResult": true
         },
@@ -493,7 +493,7 @@
         {
           "type": "TABLE_RECORD_CREATE",
           "table": "client",
-          "data": "$data",
+          "data": "data",
           "awaitResult": true
         },
         {
@@ -528,6 +528,11 @@
           "value": "null"
         },
         {
+          "type": "VARIABLE_DEFINE",
+          "name": "result",
+          "value": "null"
+        },
+        {
           "type": "TABLE_DATA_SELECT",
           "select": "client",
           "from": {
@@ -540,11 +545,16 @@
         {
           "type": "VARIABLE_UPDATE",
           "variable": "clients",
-          "value": "$clients.map(el => ({ label: el.name, value: el.id }))"
+          "value": "clients.map(el => ({ label: el.name, value: el.id }))"
+        },
+        {
+          "type": "VARIABLE_UPDATE",
+          "variable": "result",
+          "value": "{ clients }"
         },
         {
           "type": "RETURN",
-          "data": "{ $clients }",
+          "data": "{{ result }}",
           "config": null
         }
       ]
@@ -581,8 +591,8 @@
         {
           "type": "RETURN",
           "data": {
-            "items": "$paymentsGetRes[0]",
-            "totalCount": "$paymentsGetRes[1]",
+            "items": "{{ paymentsGetRes[0] }}",
+            "totalCount": "{{ paymentsGetRes[1] }}",
             "pagination": {
               "itemsPerPage": 10
             }
@@ -644,9 +654,9 @@
           "type": "TABLE_RECORD_CREATE",
           "table": "payment",
           "data": {
-            "amount": "$data.amount",
-            "invoice": "$data.invoice",
-            "client": "$invoice.client.id"
+            "amount": "{{ data.amount }}",
+            "invoice": "{{ data.invoice }}",
+            "client": "{{ invoice.client.id }}"
           },
           "awaitResult": true
         },
@@ -710,6 +720,11 @@
           "value": "null"
         },
         {
+          "type": "VARIABLE_DEFINE",
+          "name": "result",
+          "value": "null"
+        },
+        {
           "type": "TABLE_DATA_SELECT",
           "select": "invoice",
           "from": {
@@ -726,11 +741,16 @@
         {
           "type": "VARIABLE_UPDATE",
           "variable": "invoices",
-          "value": "$invoices.map(el => ({ label: '#' + el.id + ' ' + el.client.name, value: el.id }))"
+          "value": "invoices.map(el => ({ label: '#' + el.id + ' ' + el.client.name, value: el.id }))"
+        },
+        {
+          "type": "VARIABLE_UPDATE",
+          "variable": "result",
+          "value": "{ invoices }"
         },
         {
           "type": "RETURN",
-          "data": "{ $invoices }",
+          "data": "{{ result }}",
           "config": null
         }
       ]
