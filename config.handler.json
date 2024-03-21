@@ -6,8 +6,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "invoicesGetRes",
-          "value": "null",
-          "as": "let"
+          "value": "null"
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -43,8 +42,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "client",
-          "value": "{}",
-          "as": "let"
+          "value": "{}"
         },
         {
           "type": "CONDITION",
@@ -87,8 +85,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "invoices",
-          "value": "[]",
-          "as": "let"
+          "value": "[]"
         },
         {
           "type": "CONDITION",
@@ -153,8 +150,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "payments",
-          "value": "[]",
-          "as": "let"
+          "value": "[]"
         },
         {
           "type": "CONDITION",
@@ -201,8 +197,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "clientsGetRes",
-          "value": "null",
-          "as": "let"
+          "value": "null"
         },
         {
           "type": "CONDITION",
@@ -378,8 +373,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "client",
-          "value": "null",
-          "as": "let"
+          "value": "null"
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -531,8 +525,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "clients",
-          "value": "null",
-          "as": "let"
+          "value": "null"
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -562,8 +555,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "paymentsGetRes",
-          "value": "null",
-          "as": "let"
+          "value": "null"
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -605,14 +597,12 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "invoice",
-          "value": "null",
-          "as": "let"
+          "value": "null"
         },
         {
           "type": "VARIABLE_DEFINE",
           "name": "client",
-          "value": "null",
-          "as": "let"
+          "value": "null"
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -717,8 +707,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "invoices",
-          "value": "null",
-          "as": "let"
+          "value": "null"
         },
         {
           "type": "TABLE_DATA_SELECT",
