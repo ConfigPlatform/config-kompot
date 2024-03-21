@@ -22,10 +22,7 @@
               "content": [
                 {
                   "type": "text",
-                  "value": "$id",
-                  "vars": {
-                    "id": "$id"
-                  }
+                  "value": "{{ id }}"
                 }
               ]
             },
@@ -34,10 +31,7 @@
               "content": [
                 {
                   "type": "text",
-                  "value": "$$amount",
-                  "vars": {
-                    "amount": "$amount"
-                  }
+                  "value": "${{ amount }}"
                 }
               ]
             },
@@ -46,10 +40,7 @@
               "content": [
                 {
                   "type": "text",
-                  "value": "$status",
-                  "vars": {
-                    "status": "$status"
-                  }
+                  "value": "{{ status }}"
                 }
               ]
             },
@@ -58,10 +49,7 @@
               "content": [
                 {
                   "type": "text",
-                  "value": "$name",
-                  "vars": {
-                    "client.name": "$name"
-                  }
+                  "value": "{{ client.name }}"
                 }
               ]
             },
@@ -81,9 +69,8 @@
                     {
                       "type": "button",
                       "data": {
-                        "clientId": "id"
+                        "invoiceId": "{{ id }}"
                       },
-                      "serverHandler": "client_delete_by_id",
                       "text": "Delete",
                       "variant": "danger",
                       "className": "w-full mx-0"
@@ -166,10 +153,7 @@
               "content": [
                 {
                   "type": "text",
-                  "value": "$id",
-                  "vars": {
-                    "id": "$id"
-                  }
+                  "value": "{{ id }}"
                 }
               ]
             },
@@ -179,12 +163,8 @@
                 {
                   "type": "link",
                   "className": "",
-                  "href": "/client/$id",
-                  "text": "$name",
-                  "vars": {
-                    "id": "$id",
-                    "name": "$name"
-                  }
+                  "href": "/client/{{ id }}",
+                  "text": "{{ name }}"
                 }
               ]
             },
@@ -193,10 +173,7 @@
               "content": [
                 {
                   "type": "text",
-                  "value": "$email",
-                  "vars": {
-                    "email": "$email"
-                  }
+                  "value": "{{ email }}"
                 }
               ]
             },
@@ -205,10 +182,7 @@
               "content": [
                 {
                   "type": "text",
-                  "value": "$phone",
-                  "vars": {
-                    "phone": "$phone"
-                  }
+                  "value": "{{ phone }}"
                 }
               ]
             },
@@ -217,10 +191,7 @@
               "content": [
                 {
                   "type": "text",
-                  "value": "$leadSource",
-                  "vars": {
-                    "leadSource": "$leadSource"
-                  }
+                  "value": "{{ leadSource }}"
                 }
               ]
             },
@@ -229,10 +200,7 @@
               "content": [
                 {
                   "type": "text",
-                  "value": "$leadStatus",
-                  "vars": {
-                    "leadStatus": "$leadStatus"
-                  }
+                  "value": "{{ leadStatus }}"
                 }
               ]
             },
@@ -252,7 +220,7 @@
                     {
                       "type": "button",
                       "data": {
-                        "clientId": "id"
+                        "clientId": "{{ id }}"
                       },
                       "serverHandler": "client_delete_by_id",
                       "text": "Delete",
@@ -288,11 +256,8 @@
                   "content": [
                     {
                       "type": "text",
-                      "value": "$name",
-                      "className": "text-3xl font-medium block",
-                      "vars": {
-                        "name": "$name"
-                      }
+                      "value": "{{ name }}",
+                      "className": "text-3xl font-medium block"
                     }
                   ]
                 },
@@ -302,19 +267,13 @@
                   "content": [
                     {
                       "type": "text",
-                      "value": "$email",
-                      "className": "block",
-                      "vars": {
-                        "email": "$email"
-                      }
+                      "value": "{{ email }}",
+                      "className": "block"
                     },
                     {
                       "type": "text",
-                      "value": "$phone",
-                      "className": "block",
-                      "vars": {
-                        "phone": "$phone"
-                      }
+                      "value": "{{ phone }}",
+                      "className": "block"
                     }
                   ]
                 }
@@ -339,10 +298,7 @@
                       "content": [
                         {
                           "type": "text",
-                          "value": "$id",
-                          "vars": {
-                            "id": "$id"
-                          }
+                          "value": "{{ id }}"
                         }
                       ]
                     },
@@ -351,10 +307,7 @@
                       "content": [
                         {
                           "type": "text",
-                          "value": "$$amount",
-                          "vars": {
-                            "amount": "$amount"
-                          }
+                          "value": "${{ amount }}"
                         }
                       ]
                     },
@@ -363,10 +316,7 @@
                       "content": [
                         {
                           "type": "text",
-                          "value": "$$paid",
-                          "vars": {
-                            "paymentSum": "$paid"
-                          }
+                          "value": "${{ paymentSum }}"
                         }
                       ]
                     },
@@ -375,10 +325,7 @@
                       "content": [
                         {
                           "type": "text",
-                          "value": "$status",
-                          "vars": {
-                            "status": "$status"
-                          }
+                          "value": "{{ status }}"
                         }
                       ]
                     }
@@ -405,10 +352,7 @@
                       "content": [
                         {
                           "type": "text",
-                          "value": "$id",
-                          "vars": {
-                            "id": "$id"
-                          }
+                          "value": "{{ id }}"
                         }
                       ]
                     },
@@ -417,10 +361,7 @@
                       "content": [
                         {
                           "type": "text",
-                          "value": "$$amount",
-                          "vars": {
-                            "amount": "$amount"
-                          }
+                          "value": "${{ amount }}"
                         }
                       ]
                     },
@@ -429,10 +370,7 @@
                       "content": [
                         {
                           "type": "text",
-                          "value": "#$invoiceId",
-                          "vars": {
-                            "invoice.id": "$invoiceId"
-                          }
+                          "value": "#{{ invoice.id }}"
                         }
                       ]
                     }
@@ -466,10 +404,7 @@
               "content": [
                 {
                   "type": "text",
-                  "value": "$id",
-                  "vars": {
-                    "id": "$id"
-                  }
+                  "value": "{{ id }}"
                 }
               ]
             },
@@ -478,10 +413,7 @@
               "content": [
                 {
                   "type": "text",
-                  "value": "$$amount",
-                  "vars": {
-                    "amount": "$amount"
-                  }
+                  "value": "${{ amount }}"
                 }
               ]
             },
@@ -490,10 +422,7 @@
               "content": [
                 {
                   "type": "text",
-                  "value": "#$id",
-                  "vars": {
-                    "invoice.id": "$id"
-                  }
+                  "value": "#{{ invoice.id }}"
                 }
               ]
             },
@@ -502,10 +431,7 @@
               "content": [
                 {
                   "type": "text",
-                  "value": "$name",
-                  "vars": {
-                    "client.name": "$name"
-                  }
+                  "value": "{{ client.name }}"
                 }
               ]
             },
@@ -525,7 +451,7 @@
                     {
                       "type": "button",
                       "data": {
-                        "id": "$id"
+                        "paymentId": "{{ id }}"
                       },
                       "serverHandler": "client_delete_one",
                       "text": "Delete",
