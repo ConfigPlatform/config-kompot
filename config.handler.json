@@ -6,7 +6,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "invoicesGetRes",
-          "value": "null"
+          "value": null
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -197,7 +197,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "clientsGetRes",
-          "value": "null"
+          "value": null
         },
         {
           "type": "VARIABLE_DEFINE",
@@ -380,7 +380,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "client",
-          "value": "null"
+          "value": null
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -532,12 +532,12 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "clients",
-          "value": "null"
+          "value": null
         },
         {
           "type": "VARIABLE_DEFINE",
           "name": "result",
-          "value": "null"
+          "value": null
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -572,7 +572,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "paymentsGetRes",
-          "value": "null"
+          "value": null
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -614,12 +614,12 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "invoice",
-          "value": "null"
+          "value": null
         },
         {
           "type": "VARIABLE_DEFINE",
           "name": "client",
-          "value": "null"
+          "value": null
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -724,12 +724,12 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "invoices",
-          "value": "null"
+          "value": null
         },
         {
           "type": "VARIABLE_DEFINE",
           "name": "result",
-          "value": "null"
+          "value": null
         },
         {
           "type": "TABLE_DATA_SELECT",

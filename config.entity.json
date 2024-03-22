@@ -7,35 +7,40 @@
           "name": "name",
           "type": "string",
           "options": {
-            "type": "varchar"
+            "type": "varchar",
+            "nullable": true
           }
         },
         {
           "name": "email",
           "type": "string",
           "options": {
-            "type": "varchar"
+            "type": "varchar",
+            "nullable": true
           }
         },
         {
           "name": "phone",
           "type": "string",
           "options": {
-            "type": "varchar"
+            "type": "varchar",
+            "nullable": true
           }
         },
         {
           "name": "leadSource",
           "type": "string",
           "options": {
-            "type": "varchar"
+            "type": "varchar",
+            "nullable": true
           }
         },
         {
           "name": "leadStatus",
           "type": "string",
           "options": {
-            "type": "varchar"
+            "type": "varchar",
+            "nullable": true
           }
         }
       ]
@@ -47,14 +52,16 @@
           "name": "amount",
           "type": "number",
           "options": {
-            "type": "int"
+            "type": "int",
+            "nullable": true
           }
         },
         {
           "name": "status",
           "type": "string",
           "options": {
-            "type": "varchar"
+            "type": "varchar",
+            "nullable": true
           }
         },
         {
@@ -74,7 +81,8 @@
           "name": "amount",
           "type": "number",
           "options": {
-            "type": "int"
+            "type": "int",
+            "nullable": true
           }
         },
         {
