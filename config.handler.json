@@ -200,6 +200,11 @@
           "value": "null"
         },
         {
+          "type": "VARIABLE_DEFINE",
+          "name": "filterCondition",
+          "value": "client.name ~* :name AND client.email ~* :email AND client.phone ~* :phone AND client.leadStatus ~* :leadStatus"
+        },
+        {
           "type": "CONDITION",
           "condition": "data.filters && data.sorting",
           "onMatch": [
@@ -210,11 +215,12 @@
                 "table": "client"
               },
               "where": {
-                "condition": "client.name ~* :name AND client.email ~* :email AND client.phone ~* :phone",
+                "condition": "{{ filterCondition }}",
                 "data": {
                   "name": ".*{{ data.filters.name || '' }}.*",
                   "email": ".*{{ data.filters.email || '' }}.*",
-                  "phone": ".*{{ data.filters.phone || '' }}.*"
+                  "phone": ".*{{ data.filters.phone || '' }}.*",
+                  "leadStatus": ".*{{ data.filters.leadStatus || '' }}.*"
                 }
               },
               "orderBy": {
@@ -279,11 +285,12 @@
                 "table": "client"
               },
               "where": {
-                "condition": "client.name ~* :name AND client.email ~* :email AND client.phone ~* :phone",
+                "condition": "{{ filterCondition }}",
                 "data": {
                   "name": ".*{{ data.filters.name || '' }}.*",
                   "email": ".*{{ data.filters.email || '' }}.*",
-                  "phone": ".*{{ data.filters.phone || '' }}.*"
+                  "phone": ".*{{ data.filters.phone || '' }}.*",
+                  "leadStatus": ".*{{ data.filters.leadStatus || '' }}.*"
                 }
               },
               "itemsPerPage": 10,

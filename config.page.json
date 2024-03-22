@@ -101,7 +101,7 @@
           "content": [
             {
               "type": "col",
-              "width": "6",
+              "width": "11",
               "content": [
                 {
                   "type": "filter",
@@ -122,6 +122,35 @@
                   "select": "client_search"
                 },
                 {
+                  "type": "filter",
+                  "placeholder": "Status",
+                  "filterBy": "leadStatus",
+                  "filterType": "select",
+                  "select": "client_search",
+                  "options": [
+                    {
+                      "label": "Draft",
+                      "value": "draft"
+                    },
+                    {
+                      "label": "Paid",
+                      "value": "paid"
+                    },
+                    {
+                      "label": "Paid partially",
+                      "value": "paid partially"
+                    },
+                    {
+                      "label": "Unpaid",
+                      "value": "unpaid"
+                    },
+                    {
+                      "label": "Overdue",
+                      "value": "overdue"
+                    }
+                  ]
+                },
+                {
                   "type": "button",
                   "variant": "secondary",
                   "text": "Reset filters",
@@ -131,8 +160,7 @@
             },
             {
               "type": "col",
-              "width": "6",
-              "className": "flex justify-end",
+              "width": "1",
               "content": [
                 {
                   "type": "button",
@@ -162,7 +190,6 @@
               "content": [
                 {
                   "type": "link",
-                  "className": "",
                   "href": "/client/{{ id }}",
                   "text": "{{ name }}"
                 }
