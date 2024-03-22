@@ -545,7 +545,7 @@
         {
           "type": "VARIABLE_UPDATE",
           "variable": "clients",
-          "value": "{{ clients.map(el => ({ label: el.name, value: el.id })) }}"
+          "value": "clients.map(el => ({ label: el.name, value: el.id }))"
         },
         {
           "type": "VARIABLE_UPDATE",
@@ -741,7 +741,7 @@
         {
           "type": "VARIABLE_UPDATE",
           "variable": "invoices",
-          "value": "{{ invoices.map(el => ({ label: '#' + el.id + ' ' + el.client.name, value: el.id })) }}"
+          "value": "invoices.map(el => ({ label: '#' + el.id + ' ' + el.client.name, value: el.id }))"
         },
         {
           "type": "VARIABLE_UPDATE",
