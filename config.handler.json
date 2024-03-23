@@ -6,7 +6,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "invoicesGetRes",
-          "value": null
+          "value": "{{ null }}"
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -85,7 +85,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "invoices",
-          "value": "[]"
+          "value": "{{ [] }}"
         },
         {
           "type": "CONDITION",
@@ -150,7 +150,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "payments",
-          "value": "[]"
+          "value": "{{ [] }}"
         },
         {
           "type": "CONDITION",
@@ -197,7 +197,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "clientsGetRes",
-          "value": null
+          "value": "{{ null }}"
         },
         {
           "type": "VARIABLE_DEFINE",
@@ -380,7 +380,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "client",
-          "value": null
+          "value": "{{ null }}"
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -532,12 +532,12 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "clients",
-          "value": null
+          "value": "{{ null }}"
         },
         {
           "type": "VARIABLE_DEFINE",
           "name": "result",
-          "value": null
+          "value": "{{ null }}"
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -572,7 +572,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "paymentsGetRes",
-          "value": null
+          "value": "{{ null }}"
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -614,12 +614,12 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "invoice",
-          "value": null
+          "value": "{{ null }}"
         },
         {
           "type": "VARIABLE_DEFINE",
           "name": "client",
-          "value": null
+          "value": "{{ null }}"
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -724,12 +724,12 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "invoices",
-          "value": null
+          "value": "{{ null }}"
         },
         {
           "type": "VARIABLE_DEFINE",
           "name": "result",
-          "value": null
+          "value": "{{ null }}"
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -759,6 +759,121 @@
           "type": "RETURN",
           "data": "{{ result }}",
           "config": null
+        }
+      ]
+    },
+    {
+      "name": "invoice_delete_by_id",
+      "actions": [
+        {
+          "type": "VARIABLE_DEFINE",
+          "name": "payments",
+          "value": "{{ null }}"
+        },
+        {
+          "type": "TABLE_DATA_SELECT",
+          "select": "payment",
+          "from": {
+            "table": "payment"
+          },
+          "where": {
+            "condition": "payment.invoice = :invoiceId",
+            "data": {
+              "invoiceId": "{{ data.invoiceId }}"
+            }
+          },
+          "getMany": true,
+          "awaitResult": true,
+          "assignToVar": "payments"
+        },
+        {
+          "type": "VARIABLE_DEFINE",
+          "name": "paymentIds",
+          "value": "{{ payments.map(el => el.id) }}"
+        },
+        {
+          "type": "CONDITION",
+          "condition": "paymentIds.length",
+          "onMatch": [
+            {
+              "type": "TABLE_RECORD_DELETE",
+              "from": {
+                "table": "payment"
+              },
+              "where": {
+                "condition": "payment.id IN (:...paymentIds)",
+                "data": {
+                  "paymentIds": "{{ paymentIds }}"
+                }
+              },
+              "awaitResult": true
+            }
+          ]
+        },
+        {
+          "type": "TABLE_RECORD_DELETE",
+          "from": {
+            "table": "invoice"
+          },
+          "where": {
+            "condition": "invoice.id = :invoiceId",
+            "data": {
+              "invoiceId": "{{ data.invoiceId }}"
+            }
+          },
+          "awaitResult": true
+        },
+        {
+          "type": "RETURN",
+          "config": [
+            {
+              "clientHandler": "DATA_REFRESH",
+              "select": "invoice_search"
+            },
+            {
+              "clientHandler": "MESSAGE_DISPLAY",
+              "id": "invoice_deleted",
+              "status": "success",
+              "duration": 2000,
+              "placement": "top-right",
+              "content": "Invoice was deleted"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "payment_delete_by_id",
+      "actions": [
+        {
+          "type": "TABLE_RECORD_DELETE",
+          "from": {
+            "table": "payment"
+          },
+          "where": {
+            "condition": "payment.id = :paymentId",
+            "data": {
+              "paymentId": "{{ data.paymentId }}"
+            }
+          },
+          "awaitResult": true
+        },
+        {
+          "type": "RETURN",
+          "config": [
+            {
+              "clientHandler": "DATA_REFRESH",
+              "select": "payment_search"
+            },
+            {
+              "clientHandler": "MESSAGE_DISPLAY",
+              "id": "payment_deleted",
+              "status": "success",
+              "duration": 2000,
+              "placement": "top-right",
+              "content": "Payment was deleted"
+            }
+          ]
         }
       ]
     }

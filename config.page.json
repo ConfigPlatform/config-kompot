@@ -68,6 +68,7 @@
                     },
                     {
                       "type": "button",
+                      "serverHandler": "invoice_delete_by_id",
                       "data": {
                         "invoiceId": "{{ id }}"
                       },
@@ -343,7 +344,7 @@
                       "content": [
                         {
                           "type": "text",
-                          "value": "${{ paymentSum }}"
+                          "value": "${{ paymentSum || 0 }}"
                         }
                       ]
                     },
@@ -480,7 +481,7 @@
                       "data": {
                         "paymentId": "{{ id }}"
                       },
-                      "serverHandler": "client_delete_one",
+                      "serverHandler": "payment_delete_by_id",
                       "text": "Delete",
                       "variant": "danger",
                       "className": "w-full mx-0"
