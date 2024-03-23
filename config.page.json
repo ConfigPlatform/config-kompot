@@ -11,7 +11,7 @@
         {
           "type": "button",
           "text": "Add Invoice",
-          "serverHandler": "open_invoice_create_sidepanel"
+          "serverHandler": "invoice_create_open"
         },
         {
           "type": "table",
@@ -129,33 +129,19 @@
                   "filterType": "select",
                   "select": "client_search",
                   "options": [
-                    {
-                      "label": "Draft",
-                      "value": "draft"
-                    },
-                    {
-                      "label": "Paid",
-                      "value": "paid"
-                    },
-                    {
-                      "label": "Paid partially",
-                      "value": "paid partially"
-                    },
-                    {
-                      "label": "Unpaid",
-                      "value": "unpaid"
-                    },
-                    {
-                      "label": "Overdue",
-                      "value": "overdue"
-                    }
+                    {"label": "New", "value": "new"},
+                    {"label": "Contacted", "value": "contacted"},
+                    {"label": "Qualified", "value": "qualified"},
+                    {"label": "Lost", "value": "lost"},
+                    {"label": "Won", "value": "won"},
+                    {"label": "Closed", "value": "closed"}
                   ]
                 },
                 {
                   "type": "button",
                   "variant": "secondary",
                   "text": "Reset filters",
-                  "serverHandler": "open_client_create_sidepanel"
+                  "serverHandler": "client_create_open"
                 }
               ]
             },
@@ -166,7 +152,7 @@
                 {
                   "type": "button",
                   "text": "Add Client",
-                  "serverHandler": "open_client_create_sidepanel"
+                  "serverHandler": "client_create_open"
                 }
               ]
             }
@@ -242,8 +228,18 @@
                   "content": [
                     {
                       "type": "button",
+                      "data": {
+                        "id": "{{ id }}",
+                        "name": "{{ name }}",
+                        "email": "{{ email }}",
+                        "phone": "{{ phone }}",
+                        "leadSource": "{{ leadSource }}",
+                        "leadStatus": "{{ leadStatus }}"
+                      },
                       "text": "Edit",
-                      "className": "w-full mx-0"
+                      "className": "mx-0",
+                      "variant": "secondary",
+                      "serverHandler": "client_update_open"
                     },
                     {
                       "type": "button",
@@ -253,7 +249,7 @@
                       "serverHandler": "client_delete_by_id",
                       "text": "Delete",
                       "variant": "danger",
-                      "className": "w-full mx-0"
+                      "className": "mx-0"
                     }
                   ]
                 }
@@ -421,7 +417,7 @@
         {
           "type": "button",
           "text": "Add Payment",
-          "serverHandler": "payment_create_sidepanel_open"
+          "serverHandler": "payment_create_open"
         },
         {
           "type": "table",

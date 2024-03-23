@@ -1,7 +1,7 @@
 {
   "sidepanels": [
     {
-      "id": "create_invoice",
+      "id": "invoice_create",
       "width": "25%",
       "placement": "right",
       "content": [
@@ -42,14 +42,14 @@
                       "type": "button",
                       "htmlType": "submit",
                       "text": "Submit",
-                      "serverHandler": "invoice_create_sidepanel_submit",
+                      "serverHandler": "invoice_create",
                       "className": "ms-0"
                     },
                     {
                       "type": "button",
                       "text": "Cancel",
                       "variant": "secondary",
-                      "serverHandler": "close_invoice_create_sidepanel"
+                      "serverHandler": "invoice_create_cancel"
                     }
                   ]
                 }
@@ -60,7 +60,7 @@
       ]
     },
     {
-      "id": "create_payment",
+      "id": "payment_create",
       "width": "25%",
       "placement": "right",
       "content": [
@@ -101,14 +101,14 @@
                       "type": "button",
                       "htmlType": "submit",
                       "text": "Submit",
-                      "serverHandler": "payment_create_sidepanel_submit",
+                      "serverHandler": "payment_create",
                       "className": "ms-0"
                     },
                     {
                       "type": "button",
                       "text": "Cancel",
                       "variant": "secondary",
-                      "serverHandler": "payment_create_sidepanel_close"
+                      "serverHandler": "payment_create_cancel"
                     }
                   ]
                 }
@@ -119,7 +119,7 @@
       ]
     },
     {
-      "id": "create_client",
+      "id": "client_create",
       "width": "25%",
       "placement": "right",
       "content": [
@@ -162,23 +162,30 @@
                 {
                   "name": "leadStatus",
                   "label": "Lead Status",
-                  "type": "text",
-                  "required": true
-                }
-              ],
+                  "type": "select",
+                  "required": true,
+                  "options": [
+                    {"label": "New", "value": "new"},
+                    {"label": "Contacted", "value": "contacted"},
+                    {"label": "Qualified", "value": "qualified"},
+                    {"label": "Lost", "value": "lost"},
+                    {"label": "Won", "value": "won"},
+                    {"label": "Closed", "value": "closed"}
+                  ]
+                }],
               "actions": [
                 {
                   "type": "button",
                   "text": "Submit",
                   "htmlType": "submit",
-                  "serverHandler": "client_create_sidepanel_submit",
+                  "serverHandler": "client_create",
                   "className": "ms-0"
                 },
                 {
                   "type": "button",
                   "text": "Cancel",
                   "variant": "secondary",
-                  "serverHandler": "close_client_create_sidepanel"
+                  "serverHandler": "client_create_cancel"
                 }
               ]
             }

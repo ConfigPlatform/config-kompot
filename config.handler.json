@@ -6,7 +6,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "invoicesGetRes",
-          "value": "{{ null }}"
+          "value": null
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -85,7 +85,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "invoices",
-          "value": "{{ [] }}"
+          "value": []
         },
         {
           "type": "CONDITION",
@@ -150,7 +150,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "payments",
-          "value": "{{ [] }}"
+          "value": []
         },
         {
           "type": "CONDITION",
@@ -197,7 +197,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "clientsGetRes",
-          "value": "{{ null }}"
+          "value": null
         },
         {
           "type": "VARIABLE_DEFINE",
@@ -347,40 +347,40 @@
       ]
     },
     {
-      "name": "open_invoice_create_sidepanel",
+      "name": "invoice_create_open",
       "actions": [
         {
           "type": "RETURN",
           "config": [
             {
               "clientHandler": "SIDEPANEL_OPEN",
-              "id": "create_invoice"
+              "id": "invoice_create"
             }
           ]
         }
       ]
     },
     {
-      "name": "close_invoice_create_sidepanel",
+      "name": "invoice_create_cancel",
       "actions": [
         {
           "type": "RETURN",
           "config": [
             {
               "clientHandler": "SIDEPANEL_CLOSE",
-              "id": "create_invoice"
+              "id": "invoice_create"
             }
           ]
         }
       ]
     },
     {
-      "name": "invoice_create_sidepanel_submit",
+      "name": "invoice_create",
       "actions": [
         {
           "type": "VARIABLE_DEFINE",
           "name": "client",
-          "value": "{{ null }}"
+          "value": null
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -413,7 +413,7 @@
           "config": [
             {
               "clientHandler": "SIDEPANEL_CLOSE",
-              "id": "create_invoice"
+              "id": "invoice_create"
             },
             {
               "clientHandler": "DATA_REFRESH",
@@ -437,10 +437,36 @@
         {
           "type": "TABLE_RECORD_DELETE",
           "from": {
+            "table": "payment"
+          },
+          "where": {
+            "condition": "client = :clientId",
+            "data": {
+              "clientId": "{{ data.clientId }}"
+            }
+          },
+          "awaitResult": true
+        },
+        {
+          "type": "TABLE_RECORD_DELETE",
+          "from": {
+            "table": "invoice"
+          },
+          "where": {
+            "condition": "client = :clientId",
+            "data": {
+              "clientId": "{{ data.clientId }}"
+            }
+          },
+          "awaitResult": true
+        },
+        {
+          "type": "TABLE_RECORD_DELETE",
+          "from": {
             "table": "client"
           },
           "where": {
-            "condition": "client.id = :clientId",
+            "condition": "id = :clientId",
             "data": {
               "clientId": "{{ data.clientId }}"
             }
@@ -467,35 +493,50 @@
       ]
     },
     {
-      "name": "open_client_create_sidepanel",
+      "name": "client_create_open",
       "actions": [
         {
           "type": "RETURN",
           "config": [
             {
               "clientHandler": "SIDEPANEL_OPEN",
-              "id": "create_client"
+              "id": "client_create"
             }
           ]
         }
       ]
     },
     {
-      "name": "close_client_create_sidepanel",
+      "name": "client_create_cancel",
       "actions": [
         {
           "type": "RETURN",
           "config": [
             {
               "clientHandler": "SIDEPANEL_CLOSE",
-              "id": "create_client"
+              "id": "client_create"
             }
           ]
         }
       ]
     },
     {
-      "name": "client_create_sidepanel_submit",
+      "name": "client_update_open",
+      "actions": [
+        {
+          "type": "RETURN",
+          "config": [
+            {
+              "clientHandler": "SIDEPANEL_OPEN",
+              "id": "client_update",
+              "data": "{{ data }}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "client_create",
       "actions": [
         {
           "type": "TABLE_RECORD_CREATE",
@@ -508,7 +549,7 @@
           "config": [
             {
               "clientHandler": "SIDEPANEL_CLOSE",
-              "id": "create_client"
+              "id": "client_create"
             },
             {
               "clientHandler": "DATA_REFRESH",
@@ -532,12 +573,12 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "clients",
-          "value": "{{ null }}"
+          "value": null
         },
         {
           "type": "VARIABLE_DEFINE",
           "name": "result",
-          "value": "{{ null }}"
+          "value": null
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -572,7 +613,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "paymentsGetRes",
-          "value": "{{ null }}"
+          "value": null
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -609,17 +650,17 @@
       ]
     },
     {
-      "name": "payment_create_sidepanel_submit",
+      "name": "payment_create",
       "actions": [
         {
           "type": "VARIABLE_DEFINE",
           "name": "invoice",
-          "value": "{{ null }}"
+          "value": null
         },
         {
           "type": "VARIABLE_DEFINE",
           "name": "client",
-          "value": "{{ null }}"
+          "value": null
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -672,7 +713,7 @@
           "config": [
             {
               "clientHandler": "SIDEPANEL_CLOSE",
-              "id": "create_payment"
+              "id": "payment_create"
             },
             {
               "clientHandler": "DATA_REFRESH",
@@ -691,28 +732,28 @@
       ]
     },
     {
-      "name": "payment_create_sidepanel_close",
+      "name": "payment_create_cancel",
       "actions": [
         {
           "type": "RETURN",
           "config": [
             {
               "clientHandler": "SIDEPANEL_CLOSE",
-              "id": "create_payment"
+              "id": "payment_create"
             }
           ]
         }
       ]
     },
     {
-      "name": "payment_create_sidepanel_open",
+      "name": "payment_create_open",
       "actions": [
         {
           "type": "RETURN",
           "config": [
             {
               "clientHandler": "SIDEPANEL_OPEN",
-              "id": "create_payment"
+              "id": "payment_create"
             }
           ]
         }
@@ -724,12 +765,12 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "invoices",
-          "value": "{{ null }}"
+          "value": null
         },
         {
           "type": "VARIABLE_DEFINE",
           "name": "result",
-          "value": "{{ null }}"
+          "value": null
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -766,49 +807,17 @@
       "name": "invoice_delete_by_id",
       "actions": [
         {
-          "type": "VARIABLE_DEFINE",
-          "name": "payments",
-          "value": "{{ null }}"
-        },
-        {
-          "type": "TABLE_DATA_SELECT",
-          "select": "payment",
+          "type": "TABLE_RECORD_DELETE",
           "from": {
             "table": "payment"
           },
           "where": {
-            "condition": "payment.invoice = :invoiceId",
+            "condition": "invoice = :invoiceId",
             "data": {
               "invoiceId": "{{ data.invoiceId }}"
             }
           },
-          "getMany": true,
-          "awaitResult": true,
-          "assignToVar": "payments"
-        },
-        {
-          "type": "VARIABLE_DEFINE",
-          "name": "paymentIds",
-          "value": "{{ payments.map(el => el.id) }}"
-        },
-        {
-          "type": "CONDITION",
-          "condition": "paymentIds.length",
-          "onMatch": [
-            {
-              "type": "TABLE_RECORD_DELETE",
-              "from": {
-                "table": "payment"
-              },
-              "where": {
-                "condition": "payment.id IN (:...paymentIds)",
-                "data": {
-                  "paymentIds": "{{ paymentIds }}"
-                }
-              },
-              "awaitResult": true
-            }
-          ]
+          "awaitResult": true
         },
         {
           "type": "TABLE_RECORD_DELETE",
