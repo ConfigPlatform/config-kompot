@@ -42,7 +42,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "client",
-          "value": "{}"
+          "value": {}
         },
         {
           "type": "CONDITION",
@@ -200,149 +200,37 @@
           "value": null
         },
         {
-          "type": "VARIABLE_DEFINE",
-          "name": "filterCondition",
-          "value": "client.name ~* :name AND client.email ~* :email AND client.phone ~* :phone AND client.leadStatus ~* :leadStatus"
+          "type": "TABLE_DATA_SELECT",
+          "select": "client",
+          "from": {
+            "table": "client"
+          },
+          "where": {
+            "condition": "client.name ~* :name AND client.email ~* :email AND client.phone ~* :phone AND client.leadStatus ~* :leadStatus",
+            "data": {
+              "name": ".*{{ data.filters?.name || '' }}.*",
+              "email": ".*{{ data.filters?.email || '' }}.*",
+              "phone": ".*{{ data.filters?.phone || '' }}.*",
+              "leadStatus": ".*{{ data.filters?.leadStatus || '' }}.*"
+            }
+          },
+          "orderBy": {
+            "client.id": "{{ data.sorting?.id || '' }}"
+          },
+          "itemsPerPage": 10,
+          "getManyAndCount": true,
+          "awaitResult": true,
+          "assignToVar": "clientsGetRes"
         },
         {
-          "type": "CONDITION",
-          "condition": "data.filters && data.sorting",
-          "onMatch": [
-            {
-              "type": "TABLE_DATA_SELECT",
-              "select": "client",
-              "from": {
-                "table": "client"
-              },
-              "where": {
-                "condition": "{{ filterCondition }}",
-                "data": {
-                  "name": ".*{{ data.filters.name || '' }}.*",
-                  "email": ".*{{ data.filters.email || '' }}.*",
-                  "phone": ".*{{ data.filters.phone || '' }}.*",
-                  "leadStatus": ".*{{ data.filters.leadStatus || '' }}.*"
-                }
-              },
-              "orderBy": {
-                "client.id": "{{ data.sorting.id }}"
-              },
-              "itemsPerPage": 10,
-              "getManyAndCount": true,
-              "awaitResult": true,
-              "assignToVar": "clientsGetRes"
-            },
-            {
-              "type": "RETURN",
-              "data": {
-                "items": "{{ clientsGetRes[0] }}",
-                "totalCount": "{{ clientsGetRes[1] }}",
-                "pagination": {
-                  "itemsPerPage": 10
-                }
-              },
-              "config": null
+          "type": "RETURN",
+          "data": {
+            "items": "{{ clientsGetRes[0] }}",
+            "totalCount": "{{ clientsGetRes[1] }}",
+            "pagination": {
+              "itemsPerPage": 10
             }
-          ],
-          "onNotMatch": []
-        },
-        {
-          "type": "CONDITION",
-          "condition": "!data.filters && !data.sorting",
-          "onMatch": [
-            {
-              "type": "TABLE_DATA_SELECT",
-              "select": "client",
-              "from": {
-                "table": "client"
-              },
-              "itemsPerPage": 10,
-              "getManyAndCount": true,
-              "awaitResult": true,
-              "assignToVar": "clientsGetRes"
-            },
-            {
-              "type": "RETURN",
-              "data": {
-                "items": "{{ clientsGetRes[0] }}",
-                "totalCount": "{{ clientsGetRes[1] }}",
-                "pagination": {
-                  "itemsPerPage": 10
-                }
-              },
-              "config": null
-            }
-          ],
-          "onNotMatch": []
-        },
-        {
-          "type": "CONDITION",
-          "condition": "data.filters",
-          "onMatch": [
-            {
-              "type": "TABLE_DATA_SELECT",
-              "select": "client",
-              "from": {
-                "table": "client"
-              },
-              "where": {
-                "condition": "{{ filterCondition }}",
-                "data": {
-                  "name": ".*{{ data.filters.name || '' }}.*",
-                  "email": ".*{{ data.filters.email || '' }}.*",
-                  "phone": ".*{{ data.filters.phone || '' }}.*",
-                  "leadStatus": ".*{{ data.filters.leadStatus || '' }}.*"
-                }
-              },
-              "itemsPerPage": 10,
-              "getManyAndCount": true,
-              "awaitResult": true,
-              "assignToVar": "clientsGetRes"
-            },
-            {
-              "type": "RETURN",
-              "data": {
-                "items": "{{ clientsGetRes[0] }}",
-                "totalCount": "{{ clientsGetRes[1] }}",
-                "pagination": {
-                  "itemsPerPage": 10
-                }
-              },
-              "config": null
-            }
-          ],
-          "onNotMatch": []
-        },
-        {
-          "type": "CONDITION",
-          "condition": "data.sorting",
-          "onMatch": [
-            {
-              "type": "TABLE_DATA_SELECT",
-              "select": "client",
-              "from": {
-                "table": "client"
-              },
-              "orderBy": {
-                "client.id": "{{ data.sorting.id }}"
-              },
-              "itemsPerPage": 10,
-              "getManyAndCount": true,
-              "awaitResult": true,
-              "assignToVar": "clientsGetRes"
-            },
-            {
-              "type": "RETURN",
-              "data": {
-                "items": "{{ clientsGetRes[0] }}",
-                "totalCount": "{{ clientsGetRes[1] }}",
-                "pagination": {
-                  "itemsPerPage": 10
-                }
-              },
-              "config": null
-            }
-          ],
-          "onNotMatch": []
+          }
         }
       ]
     },
@@ -627,7 +515,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "result",
-          "value": null
+          "value": {}
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -641,13 +529,8 @@
         },
         {
           "type": "VARIABLE_UPDATE",
-          "variable": "clients",
-          "value": "clients.map(el => ({ label: el.name, value: el.id }))"
-        },
-        {
-          "type": "VARIABLE_UPDATE",
-          "variable": "result",
-          "value": "{ clients }"
+          "variable": "result.clients",
+          "value": "{{ clients.map(el => ({ label: el.name, value: el.id })) }}"
         },
         {
           "type": "RETURN",
@@ -819,7 +702,7 @@
         {
           "type": "VARIABLE_DEFINE",
           "name": "result",
-          "value": null
+          "value": {}
         },
         {
           "type": "TABLE_DATA_SELECT",
@@ -837,13 +720,8 @@
         },
         {
           "type": "VARIABLE_UPDATE",
-          "variable": "invoices",
-          "value": "invoices.map(el => ({ label: '#' + el.id + ' ' + el.client.name, value: el.id }))"
-        },
-        {
-          "type": "VARIABLE_UPDATE",
-          "variable": "result",
-          "value": "{ invoices }"
+          "variable": "result.invoices",
+          "value": "{{ invoices.map(el => ({ label: '#' + el.id + ' ' + el.client.name, value: el.id })) }}"
         },
         {
           "type": "RETURN",

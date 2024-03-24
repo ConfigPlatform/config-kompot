@@ -5,7 +5,6 @@
       "fields": [
         {
           "name": "name",
-          "type": "string",
           "options": {
             "type": "varchar",
             "nullable": true
@@ -13,7 +12,6 @@
         },
         {
           "name": "email",
-          "type": "string",
           "options": {
             "type": "varchar",
             "nullable": true
@@ -21,7 +19,6 @@
         },
         {
           "name": "phone",
-          "type": "string",
           "options": {
             "type": "varchar",
             "nullable": true
@@ -29,7 +26,6 @@
         },
         {
           "name": "leadSource",
-          "type": "string",
           "options": {
             "type": "varchar",
             "nullable": true
@@ -37,7 +33,6 @@
         },
         {
           "name": "leadStatus",
-          "type": "string",
           "options": {
             "type": "varchar",
             "nullable": true
@@ -50,7 +45,6 @@
       "fields": [
         {
           "name": "amount",
-          "type": "number",
           "options": {
             "type": "int",
             "nullable": true
@@ -58,7 +52,6 @@
         },
         {
           "name": "status",
-          "type": "string",
           "options": {
             "type": "varchar",
             "nullable": true
@@ -66,7 +59,6 @@
         },
         {
           "name": "client",
-          "type": "relation",
           "options": {
             "ref": "client",
             "relationType": "many-to-one"
@@ -79,7 +71,6 @@
       "fields": [
         {
           "name": "amount",
-          "type": "number",
           "options": {
             "type": "int",
             "nullable": true
@@ -87,7 +78,6 @@
         },
         {
           "name": "client",
-          "type": "relation",
           "options": {
             "relationType": "many-to-one",
             "ref": "client"
@@ -95,7 +85,6 @@
         },
         {
           "name": "invoice",
-          "type": "relation",
           "options": {
             "relationType": "many-to-one",
             "ref": "invoice"
