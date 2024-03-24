@@ -1,3 +1,81 @@
 {
-  "modals": []
+  "modals": [
+    {
+      "id": "client_update",
+      "width": "35%",
+      "placement": "top-center",
+      "content": [
+        {
+          "type": "text",
+          "value": "Edit Client",
+          "className": "text-xl text-gray-900 font-medium mb-2"
+        },
+        {
+          "type": "form",
+          "fields": [
+            {
+              "name": "name",
+              "label": "Name",
+              "type": "text",
+              "required": true,
+              "defaultValue": "{{ name }}"
+            },
+            {
+              "name": "email",
+              "label": "Email",
+              "type": "text",
+              "required": true,
+              "defaultValue": "{{ email }}"
+            },
+            {
+              "name": "phone",
+              "label": "Phone",
+              "type": "text",
+              "required": true,
+              "defaultValue": "{{ phone }}"
+            },
+            {
+              "name": "leadSource",
+              "label": "Lead Source",
+              "type": "text",
+              "required": true,
+              "defaultValue": "{{ leadSource }}"
+            },
+            {
+              "name": "leadStatus",
+              "label": "Lead Status",
+              "type": "select",
+              "required": true,
+              "options": [
+                {"label": "New", "value": "new"},
+                {"label": "Contacted", "value": "contacted"},
+                {"label": "Qualified", "value": "qualified"},
+                {"label": "Lost", "value": "lost"},
+                {"label": "Won", "value": "won"},
+                {"label": "Closed", "value": "closed"}
+              ],
+              "defaultValue": "{{ leadStatus }}"
+            }],
+          "actions": [
+            {
+              "type": "button",
+              "text": "Update",
+              "htmlType": "submit",
+              "serverHandler": "client_update",
+              "data": {
+                "id": "{{ id }}"
+              },
+              "className": "ms-0"
+            },
+            {
+              "type": "button",
+              "text": "Cancel",
+              "variant": "secondary",
+              "serverHandler": "client_update_close"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

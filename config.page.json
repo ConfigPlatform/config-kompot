@@ -129,12 +129,30 @@
                   "filterType": "select",
                   "select": "client_search",
                   "options": [
-                    {"label": "New", "value": "new"},
-                    {"label": "Contacted", "value": "contacted"},
-                    {"label": "Qualified", "value": "qualified"},
-                    {"label": "Lost", "value": "lost"},
-                    {"label": "Won", "value": "won"},
-                    {"label": "Closed", "value": "closed"}
+                    {
+                      "label": "New",
+                      "value": "new"
+                    },
+                    {
+                      "label": "Contacted",
+                      "value": "contacted"
+                    },
+                    {
+                      "label": "Qualified",
+                      "value": "qualified"
+                    },
+                    {
+                      "label": "Lost",
+                      "value": "lost"
+                    },
+                    {
+                      "label": "Won",
+                      "value": "won"
+                    },
+                    {
+                      "label": "Closed",
+                      "value": "closed"
+                    }
                   ]
                 },
                 {
@@ -276,7 +294,7 @@
               "content": [
                 {
                   "type": "col",
-                  "width": 1,
+                  "width": 2,
                   "content": [
                     {
                       "type": "text",

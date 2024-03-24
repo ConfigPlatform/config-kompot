@@ -527,9 +527,58 @@
           "type": "RETURN",
           "config": [
             {
-              "clientHandler": "SIDEPANEL_OPEN",
+              "clientHandler": "MODAL_OPEN",
               "id": "client_update",
               "data": "{{ data }}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "client_update_close",
+      "actions": [
+        {
+          "type": "RETURN",
+          "config": [
+            {
+              "clientHandler": "MODAL_CLOSE",
+              "id": "client_update"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "client_update",
+      "actions": [
+        {
+          "type": "TABLE_RECORD_UPDATE",
+          "update": "client",
+          "set": {
+            "name": "{{ data.name }}",
+            "email": "{{ data.email }}",
+            "phone": "{{ data.phone }}",
+            "leadSource": "{{ data.leadSource }}",
+            "leadStatus": "{{ data.leadStatus }}"
+          },
+          "where": {
+            "condition": "id = :clientId",
+            "data": {
+              "clientId": "{{ data.id }}"
+            }
+          }
+        },
+        {
+          "type": "RETURN",
+          "config": [
+            {
+              "clientHandler": "MODAL_CLOSE",
+              "id": "client_update"
+            },
+            {
+              "clientHandler": "DATA_REFRESH",
+              "select": "client_search"
             }
           ]
         }
