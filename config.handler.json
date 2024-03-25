@@ -266,33 +266,12 @@
       "name": "invoice_create",
       "actions": [
         {
-          "type": "VARIABLE_DEFINE",
-          "name": "client",
-          "value": null
-        },
-        {
-          "type": "TABLE_DATA_SELECT",
-          "select": "client",
-          "from": {
-            "table": "client"
-          },
-          "where": {
-            "condition": "client.id = :clientId",
-            "data": {
-              "clientId": "{{ data.client }}"
-            }
-          },
-          "getOne": true,
-          "awaitResult": true,
-          "assignToVar": "client"
-        },
-        {
           "type": "TABLE_RECORD_CREATE",
           "table": "invoice",
           "data": {
             "amount": "{{ data.amount }}",
             "status": "draft",
-            "client": "{{ client.id }}"
+            "client": "{{ data.client }}"
           },
           "awaitResult": true
         },
